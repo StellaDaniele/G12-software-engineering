@@ -1,4 +1,4 @@
-.w3-button {
+.plus-button {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -9,10 +9,9 @@
     overflow: hidden;
     color: white;
     background-color: orange;
-    text-align: center;
-    cursor: pointer;
-    white-space: nowrap;
+    font-size:37px;
     border-radius: 100%;
+    
 }
 
 .span {
