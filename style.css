@@ -1,0 +1,16 @@
+.w3-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: none;
+    display: inline-block;
+    padding: 30px 30px;
+    vertical-align: middle;
+    overflow: hidden;
+    color: white;
+    background-color: orange;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 100%;
+}
