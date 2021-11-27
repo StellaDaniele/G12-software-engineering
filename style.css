@@ -52,6 +52,29 @@ h1 {
     transition: 0.4s;
 }
 
+
+/* Rotate first bar */
+
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+    transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+
+/* Fade out the second bar */
+
+.change .bar2 {
+    opacity: 0;
+}
+
+
+/* Rotate last bar */
+
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px);
+    transform: rotate(45deg) translate(-8px, -8px);
+}
+
 .sidenav {
     height: 100%;
     /* 100% Full-height */
@@ -64,7 +87,7 @@ h1 {
     top: 0;
     /* Stay at the top */
     left: 0;
-    background-color: #111;
+    background-color: white;
     /* Black*/
     overflow-x: hidden;
     /* Disable horizontal scroll */
@@ -84,4 +107,21 @@ h1 {
     color: orange;
     display: block;
     transition: 0.3s;
+}
+
+
+/* When you mouse over the navigation links, change their color */
+
+.sidenav a:hover {
+    color: black;
+}
+
+
+/* Position and style the close button (top right corner) */
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 36px;
 }
