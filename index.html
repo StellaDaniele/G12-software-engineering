@@ -11,19 +11,30 @@
 </head>
 
 <body>
-    <div class="hamburger" onclick="myFunction(this)">
+    <div class="hamburger" onclick="openNav()">
         <div class="bar1"></div>
         <div class="bar2"></div>
         <div class="bar3"></div>
     </div>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">Cronologia pasti e allenamenti</a>
+        <a href="#">Scheda alimentazione</a>
+        <a href="#">Scheda allenamento</a>
+        <a href="#">Allenatore</a>
+    </div>
     <h1>Riepilogo giornaliero</h1>
     <hr>
-    <progress id="carb" value="32" max="100"> </progress>
+    <span class="span" style="background-color: green;"></span>Carbs
+    <span class="span" style="background-color: red;"></span>Proteins
+    <span class="span" style="background-color: blue;"></span>Fats
     <br>
-    <progress id="prote" value="32" max="100"> </progress>
+    <progress id="carb" value="32 " max="100 "> </progress>
     <br>
-    <progress id="fat" value="32" max="100"> </progress>
-    <button class="w3-button">+</button>
+    <progress id="prote" value="32 " max="100 "> </progress>
+    <br>
+    <progress id="fat" value="32 " max="100 "> </progress>
+    <button class="w3-button ">+</button>
 </body>
 
 </html>
