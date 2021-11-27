@@ -14,3 +14,7 @@
     white-space: nowrap;
     border-radius: 100%;
 }
+
+#carb::-moz-progress-bar {
+    background: green;
+}
