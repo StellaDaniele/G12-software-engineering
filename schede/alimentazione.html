@@ -11,7 +11,18 @@
 </head>
 
 <body>
-    <a href="../index.html" class="previous">Home</a>
+    <div class="hamburger" onclick="fromHamburgerToIcs()">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+    </div>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="../index.html">Home</a>
+        <a href="#">Cronologia pasti e allenamenti</a>
+        <a href="allenamento.html">Scheda allenamenti</a>
+        <a href="../allenatore/allenatore.html ">Allenatore</a>
+    </div>
     <h1>Scheda di alimentazione</h1>
     <hr>
     <iframe src="alimentazione.txt" id="visualizzer">
