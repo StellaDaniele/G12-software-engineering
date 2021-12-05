@@ -1,0 +1,48 @@
+.plus-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: none;
+    display: inline-block;
+    padding: 30px 30px;
+    vertical-align: middle;
+    overflow: hidden;
+    color: white;
+    background-color: orange;
+    font-size:37px;
+    border-radius: 100%;
+    
+}
+
+.span {
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+}
+
+#carb::-moz-progress-bar {
+    background: green;
+}
+
+#prote::-moz-progress-bar {
+    background-color: red;
+}
+
+#fat::-moz-progress-bar {
+    background-color: blue;
+}
+
+h1 {
+    text-align: center;
+}
+
+iframe{
+   
+    display: block; 
+    border: none; 
+    width: 550px; 
+    height: 500px;  
+    overflow: hidden;
+
+}
+

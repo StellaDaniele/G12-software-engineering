@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/sidenav.css" />
+
+    <script src="/navbar.js"></script>
+
+    <title>Scheda di alimentazione</title>
+  </head>
+
+  <body>
+    <!--NavBar-->
+    <div class="hamburger" onclick="fromHamburgerToIcs()">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </div>
+
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+        >&times;</a
+      >
+      <a href="#">Cronologia pasti e allenamenti</a>
+      <a href="/alimentazione">Scheda alimentazione</a>
+      <a href="/allenamento">Scheda allenamento</a>
+      <a href="/allenatore">Allenatore</a>
+    </div>
+
+    <h1>Scheda di alimentazione</h1>
+    <hr />
+    <div id="main">
+      <iframe src="alimentazione.txt" id="visualizzer" scrolling="no"></iframe>
+    </div>
+  </body>
+</html>
