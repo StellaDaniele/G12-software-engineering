@@ -73,3 +73,31 @@ iframe{
     text-align: center;
   }
   
+  #anome {
+    border: 0px transparent;
+    outline: none;
+    pointer-events:none;
+    user-select: none;  
+  }
+
+  #acognome {
+    border: 0px transparent;
+    outline: none;
+    pointer-events:none;
+    user-select: none;  
+  }
+
+  #aetà {
+    border: 0px transparent;
+    outline: none;
+    pointer-events:none;
+    user-select: none;  
+  }
+
+  #acertificazione {
+    border: 0px transparent;
+    outline: none;
+    pointer-events:none;
+    user-select: none;  
+  }
+

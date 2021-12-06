@@ -30,16 +30,66 @@
   </div>
 
   <div id="main">
-    <h1>Dettagli allenatore</h1>
-    <hr />
-    <p>Nome:</p>
-    <hr />
-    <p>Cognome:</p>
-    <hr />
-    <p>Età:</p>
-    <hr />
-    <p>Certificazione allenatore:</p>
+    <form>
+      <h1>Dettagli allenatore</h1>
+      <hr />
+      <label for="anome">Nome:</label>
+      <input type="text" id="anome" name="anome" readonly><br><br>
+      <hr />
+      <label for="acognome">Cognome:</label>
+      <input type="text" id="acognome" name="acognome" readonly><br><br>
+      <hr />
+      <label for="aetà">Età:</label>
+      <input type="text" id="aetà" name="aetà" readonly><br><br>
+      <hr />
+      <label for="acertificazione">Certificazione allenatore:</label>
+      <input type="text" id="acertificazione" name="acertificazione" readonly><br><br>
+      <hr />
+      <input type="file" name="file" id="file">
+      <script>
+/*
+        document.getElementById('file').onchange = function () {
+
+          var file = this.files[0];
+          console.log(file);
+          var reader = new FileReader();
+          
+          reader.onload = function (progressEvent) {
+            // Entire file
+            //console.log(this.result);
+            
+            // By lines
+            var lines = this.result.split('\n');
+            /*
+            for (var line = 0; line < lines.length; line++) {
+              console.log(lines[line]);
+            }
+            *//*
+            if (lines.length >= 4) {
+              document.getElementById("anome").value = lines[0];
+              document.getElementById("acognome").value = lines[1];
+              document.getElementById("aetà").value = lines[2];
+              document.getElementById("acertificazione").value = lines[3];
+            }
+
+
+          };
+          reader.readAsText(file);
+        };
+*/
+        
+        var fs = require('fs');
+        var text = fs.readFileSync("./info_allenatore.txt", 'utf-8');
+        var textByLine = text.split('\n');
+        console.log(textByLine);
+
+
+      </script>
+    </form>
   </div>
+
+
+
 </body>
 
 </html>
