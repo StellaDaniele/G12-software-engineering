@@ -47,7 +47,11 @@
       <hr />
       <input type="file" name="file" id="file">
       <script>
-/*
+
+        const fs = require('fs');
+        const text = fs.readFileSync("./info_allenatore.txt", 'utf-8');
+        const textByLine = text.split('\n');
+
         document.getElementById('file').onchange = function () {
 
           var file = this.files[0];
@@ -60,11 +64,11 @@
             
             // By lines
             var lines = this.result.split('\n');
-            /*
+            
             for (var line = 0; line < lines.length; line++) {
               console.log(lines[line]);
             }
-            *//*
+            
             if (lines.length >= 4) {
               document.getElementById("anome").value = lines[0];
               document.getElementById("acognome").value = lines[1];
@@ -76,11 +80,9 @@
           };
           reader.readAsText(file);
         };
-*/
+
         
-        var fs = require('fs');
-        var text = fs.readFileSync("./info_allenatore.txt", 'utf-8');
-        var textByLine = text.split('\n');
+        
         console.log(textByLine);
 
 
