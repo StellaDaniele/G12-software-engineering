@@ -10,6 +10,20 @@
   <link rel="stylesheet" href="/sidenav.css" />
 
   <script src="/navbar.js"></script>
+  <script>
+    fetch("/datiAlenatore")
+    .then(res =>res.json())
+    .then(data=>{
+      let nome = document.getElementById("anome");
+      let cognome=document.getElementById("acognome");
+      let eta=document.getElementById("aetà");
+      let certificazione=document.getElementById("acertificazione");
+      nome.innerText = data.nome;
+      cognome.innerText=data.cognome;
+      eta.innerText=data.eta;
+      certificazione.innerText=data.certificazione;
+    })
+  </script>
 
   <title>Allenatore</title>
 </head>
@@ -34,64 +48,18 @@
       <h1>Dettagli allenatore</h1>
       <hr />
       <label for="anome">Nome:</label>
-      <input type="text" id="anome" name="anome" readonly><br><br>
+      <span type="text" id="anome" name="anome" readonly></span><br><br>
       <hr />
       <label for="acognome">Cognome:</label>
-      <input type="text" id="acognome" name="acognome" readonly><br><br>
+      <span type="text" id="acognome" name="acognome" readonly></span><br><br>
       <hr />
       <label for="aetà">Età:</label>
-      <input type="text" id="aetà" name="aetà" readonly><br><br>
+      <span type="text" id="aetà" name="aetà" readonly></span><br><br>
       <hr />
       <label for="acertificazione">Certificazione allenatore:</label>
-      <input type="text" id="acertificazione" name="acertificazione" readonly><br><br>
+      <span type="text" id="acertificazione" name="acertificazione" readonly></span><br><br>
       <hr />
-      <input type="file" name="file" id="file">
-      <script>
-
-        const fs = require('fs');
-        const text = fs.readFileSync("./info_allenatore.txt", 'utf-8');
-        const textByLine = text.split('\n');
-
-        document.getElementById('file').onchange = function () {
-
-          var file = this.files[0];
-          console.log(file);
-          var reader = new FileReader();
-          
-          reader.onload = function (progressEvent) {
-            // Entire file
-            //console.log(this.result);
-            
-            // By lines
-            var lines = this.result.split('\n');
-            
-            for (var line = 0; line < lines.length; line++) {
-              console.log(lines[line]);
-            }
-            
-            if (lines.length >= 4) {
-              document.getElementById("anome").value = lines[0];
-              document.getElementById("acognome").value = lines[1];
-              document.getElementById("aetà").value = lines[2];
-              document.getElementById("acertificazione").value = lines[3];
-            }
-
-
-          };
-          reader.readAsText(file);
-        };
-
-        
-        
-        console.log(textByLine);
-
-
-      </script>
     </form>
   </div>
-
-
-
 </body>
-
 </html>
