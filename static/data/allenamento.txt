@@ -1,3 +1,5 @@
+Scheda di allenamento personalizzata per Mario Rossi
+
 Lunedì:
 Addominali
 
@@ -11,7 +13,7 @@ Giovedì:
 Pausa
 
 Venerdì:
-Braccia+petto
+Braccia e Petto
 
 Fine settimana:
 Pausa

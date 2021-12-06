@@ -11,7 +11,7 @@
 
   <script src="/navbar.js"></script>
 
-  <title>Allenatore</title>
+  <title>Le mie schede</title>
 </head>
 
 <body>
@@ -26,19 +26,24 @@
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <a href="/">Home - Riepilogo giornaliero</a>
     <a href="#">Cronologia pasti e allenamenti</a>
-    <a href="/le mie schede">Le mie schede</a>
+    <a href="/allenatore">Allenatore</a>
   </div>
 
   <div id="main">
-    <h1>Dettagli allenatore</h1>
-    <hr />
-    <p>Nome:</p>
-    <hr />
-    <p>Cognome:</p>
-    <hr />
-    <p>Età:</p>
-    <hr />
-    <p>Certificazione allenatore:</p>
+    <div class="split left">
+      <div class="centered">
+        <h1>Scheda di allenamento</h1>
+        <hr />
+        <iframe src="allenamento.txt" scrolling="no"></iframe>
+      </div>
+    </div>
+    <div class="split right">
+      <div class="centered">
+        <h1>Scheda di alimentazione</h1>
+        <hr />
+        <iframe src="alimentazione.txt" id="visualizzer" scrolling="no"></iframe>
+      </div>
+    </div>
   </div>
 </body>
 
