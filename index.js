@@ -18,7 +18,7 @@ app.get('/',(req,res)=>{
     console.log("HOME PAGE");
 });
 
-app.get('/datiAlenatore',(req,res)=>{
+app.get('/datiAllenatore',(req,res)=>{
     res.sendFile((path.join(__dirname, './static/data/info_allenatore.json')))
     console.log("Pagina dei dati allenatore");
 });
