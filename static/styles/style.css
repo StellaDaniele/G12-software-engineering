@@ -35,12 +35,31 @@ h1 {
     text-align: center;
 }
 
+.container {
+  position:absolute;
+  width: 100%;
+  overflow: hidden;
+  padding-top: 56.25%;
+}
+
+.responsive {
+  position: absolute;
+  top: 0;
+  left:0;
+  bottom: 0;
+  right:0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
 iframe{
     display: block; 
     border: none; 
-    width: 550px; 
-    height: 500px;  
+    /*width: 550px;*/ 
+    /*height: 500px;*/  
     overflow: hidden;
+    word-wrap: break-word;
 }
 
 /* Split the screen in half */
@@ -50,7 +69,6 @@ iframe{
     position: fixed;
     z-index: -1;
     top: 0;
-    overflow-x: hidden;
     padding-top: 50px;
   }
   
