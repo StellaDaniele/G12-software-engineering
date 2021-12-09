@@ -1,121 +1,119 @@
 .plus-button {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    border: none;
-    display: inline-block;
-    padding: 30px 30px;
-    vertical-align: middle;
-    overflow: hidden;
-    color: white;
-    background-color: orange;
-    font-size:37px;
-    border-radius: 100%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border: none;
+  display: inline-block;
+  padding: 30px 30px;
+  vertical-align: middle;
+  overflow: hidden;
+  color: white;
+  background-color: orange;
+  font-size:37px;
+  border-radius: 100%;
 }
 
 .span {
-    height: 10px;
-    width: 10px;
-    display: inline-block;
+  height: 10px;
+  width: 10px;
+  display: inline-block;
 }
 
 #carb::-moz-progress-bar {
-    background: green;
+  background: green;
 }
 
 #prote::-moz-progress-bar {
-    background-color: red;
+  background-color: red;
 }
 
 #fat::-moz-progress-bar {
-    background-color: blue;
+  background-color: blue;
 }
 
 h1 {
-    text-align: center;
+  text-align: center;
 }
 
 .container {
-  position:absolute;
-  width: 100%;
-  overflow: hidden;
-  padding-top: 56.25%;
+position:absolute;
+width: 100%;
+overflow: hidden;
 }
 
 .responsive {
-  position: absolute;
-  top: 0;
-  left:0;
-  bottom: 0;
-  right:0;
-  width: 100%;
-  height: 100%;
-  border: none;
+position: relative;
+top: 0;
+left:0;
+bottom: 0;
+right:0;
+width: 100%;
+height: 100%;
+border: none;
 }
 
 iframe{
-    display: block; 
-    border: none; 
-    /*width: 550px;*/ 
-    /*height: 500px;*/  
-    overflow: hidden;
-    word-wrap: break-word;
+  display: block;
+  border: none;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 /* Split the screen in half */
 .split {
-    height: 70%;
-    width: 50%;
-    position: fixed;
-    z-index: -1;
-    top: 0;
-    padding-top: 50px;
-  }
-  
-  /* Control the left side */
-  .left {
-    left: 0;
-  }
-  
-  /* Control the right side */
-  .right {
-    right: 0;
-  }
-  
-  /* If you want the content centered horizontally and vertically */
-  .centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-  }
-  
-  #anome {
-    border: 0px transparent;
-    outline: none;
-    pointer-events:none;
-    user-select: none;  
-  }
+  height: 70%;
+  width: 50%;
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  padding-top: 50px;
+}
 
-  #acognome {
-    border: 0px transparent;
-    outline: none;
-    pointer-events:none;
-    user-select: none;  
-  }
+/* Control the left side */
+.left {
+  left: 0;
+}
 
-  #aetà {
-    border: 0px transparent;
-    outline: none;
-    pointer-events:none;
-    user-select: none;  
-  }
+/* Control the right side */
+.right {
+  right: 0;
+}
 
-  #acertificazione {
-    border: 0px transparent;
-    outline: none;
-    pointer-events:none;
-    user-select: none;  
-  }
+/* If you want the content centered horizontally and vertically */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  height: 100%;
+}
+
+#anome {
+  border: 0px transparent;
+  outline: none;
+  pointer-events:none;
+  user-select: none;  
+}
+
+#acognome {
+  border: 0px transparent;
+  outline: none;
+  pointer-events:none;
+  user-select: none;  
+}
+
+#aetà {
+  border: 0px transparent;
+  outline: none;
+  pointer-events:none;
+  user-select: none;  
+}
+
+#acertificazione {
+  border: 0px transparent;
+  outline: none;
+  pointer-events:none;
+  user-select: none;  
+}
 
