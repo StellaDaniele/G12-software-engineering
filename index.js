@@ -14,9 +14,9 @@ app.use(express.static(path.join(__dirname, 'static/data'), { extensions: ['html
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-app.get('/',(req,res)=>{
+/*app.get('/',(req,res)=>{
     console.log("HOME PAGE");
-});
+});*/
 
 app.get('/datiAllenatore',(req,res)=>{
     res.sendFile((path.join(__dirname, './static/data/info_allenatore.json')))
@@ -32,6 +32,14 @@ app.listen(5000, ()=>{
         else{
             db=client.db(DATABASE);
             console.log("DB connesso");
+            db.collection("Food").find({},{projection:{_id:0,nome:1}}).toArray(function(err,res){
+                if(err){
+                    console.log("Errore nel db"+err);
+                }
+                else{
+                    console.log(res);
+                }
+            })
         }
     })
     
