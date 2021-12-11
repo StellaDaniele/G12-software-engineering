@@ -3,6 +3,9 @@ const path = require('path');
 const app = express();
 const mongodb = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI = require('swagger-ui-express');
+// [TO-DO] Add swaggerOptions
 const CONNECTION_STRING="mongodb+srv://G12:1aRI17qvJk67R@g12-nutritionfacts.sxr24.mongodb.net/test";
 const DATABASE= "Food";
 let db;
@@ -24,7 +27,7 @@ app.get('/datiAllenatore',(req,res)=>{
 });
 
 app.listen(5000, ()=>{
-    console.log("Starting...");
+    console.log("APIs Running");
     mongodb.connect(CONNECTION_STRING,{ useNewUrlParser:true,useUnifiedTopology:true},(error,client)=>{
         if(error){
             console.log("Errore: "+error);
