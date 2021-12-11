@@ -10,10 +10,10 @@ const CONNECTION_STRING="mongodb+srv://G12:1aRI17qvJk67R@g12-nutritionfacts.sxr2
 const DATABASE= "Food";
 let db;
 
-app.use(express.static(path.join(__dirname, 'static'), { extensions: ['html'] }));
-app.use(express.static(path.join(__dirname, 'static/schede'), { extensions: ['html'] }));
-app.use(express.static(path.join(__dirname, 'static/styles'), { extensions: ['html'] }));
-app.use(express.static(path.join(__dirname, 'static/data'), { extensions: ['html'] }));
+app.use(express.static(path.join(__dirname, '../static'), { extensions: ['html'] }));
+app.use(express.static(path.join(__dirname, '../static/schede'), { extensions: ['html'] }));
+app.use(express.static(path.join(__dirname, '../static/styles'), { extensions: ['html'] }));
+app.use(express.static(path.join(__dirname, '../data'), { extensions: ['html'] }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 });*/
 
 app.get('/datiAllenatore',(req,res)=>{
-    res.sendFile((path.join(__dirname, './static/data/info_allenatore.json')))
+    res.sendFile((path.join(__dirname, '../data/info_allenatore.json')))
     console.log("Pagina dei dati allenatore");
 });
 
