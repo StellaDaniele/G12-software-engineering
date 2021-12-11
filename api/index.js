@@ -216,14 +216,10 @@ app.listen(5000, () => {
         else {
             db = client.db(DATABASE);
             console.log("DB connesso");
-            db.collection("Food").find({}, { projection: { _id: 0, nome: 1 } }).toArray(function (err, res) {
-                if (err) {
-                    console.log("Errore nel db" + err);
-                }
-                else {
-                    console.log(res);
-                }
-            })
+            db.collection("Food").findOne({nome:"Pera"}, function(err, result) {
+                if (err) throw err;
+                console.log(result);
+            });
         }
     })
 
