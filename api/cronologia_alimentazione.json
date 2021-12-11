@@ -1,0 +1,16 @@
+{
+    "products": [
+        {
+            "Name": "Crisps",
+            "Data": "15_12_2021",
+            "Price": 3,
+            "Location": "the Snack isle"
+        },
+        {
+            "Name": "Self-raising flour",
+            "Data": "17_12_2021",
+            "Price": 1.5,
+            "Location": "Home baking"
+        }
+    ]
+}
