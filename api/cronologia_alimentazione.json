@@ -1,14 +1,44 @@
 [
     {
-        "Name": "Crisps",
-        "Data": "15_12_2021",
-        "Price": 3,
-        "Location": "the Snack isle"
+        "_id": "61b379b6bd46612eea2ef801",
+        "nome": "Banana",
+        "energia": 60,
+        "grassi": 0.1,
+        "carboidrati": 20,
+        "proteine": 0.8,
+        "fibre": 10,
+        "ferro": 0.9,
+        "iodio": 0.01,
+        "magnesio": 0.9,
+        "data": "15_10_2021:12.2",
+        "quantita": 45.54
     },
     {
-        "Name": "Self-raising flour",
-        "Data": "17_12_2021",
-        "Price": 1.5,
-        "Location": "Home baking"
+        "_id": "61b379b6bd46612eea2ef801",
+        "nome": "Banana",
+        "energia": 78.072,
+        "grassi": 0.13012,
+        "carboidrati": 26.024,
+        "proteine": 1.04096,
+        "fibre": 13.012,
+        "ferro": 1.1710800000000001,
+        "iodio": 0.013012000000000001,
+        "magnesio": 1.1710800000000001,
+        "data": "12_12_2021:21.43",
+        "quantita": 130.12
+    },
+    {
+        "_id": "61b37ac4bd46612eea2ef804",
+        "nome": "Cipolla",
+        "energia": 99,
+        "grassi": 9,
+        "carboidrati": 13,
+        "proteine": 5.3,
+        "fibre": 34,
+        "ferro": 2.8,
+        "iodio": 0.1,
+        "magnesio": 0.6,
+        "data": "12_12_2021:22.11",
+        "quantita": 100
     }
 ]
