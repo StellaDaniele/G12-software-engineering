@@ -1,17 +1,19 @@
+//////////////// CONSTANTS
 const express = require('express');
 const path = require('path');
 const app = express();
-const mongodb = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
+const fs = require('fs');
 // [TO-DO] Add swaggerOptions
+
+// MongoDB
+const mongodb = require('mongodb').MongoClient;
+const { type } = require('os');
 const CONNECTION_STRING = "mongodb+srv://G12:1aRI17qvJk67R@g12-nutritionfacts.sxr24.mongodb.net/test";
 const DATABASE = "Food";
-const fs = require('fs');
-
-
-let db;
+let database;
 
 app.use(express.static(path.join(__dirname, '../static'), { extensions: ['html'] }));
 app.use(express.static(path.join(__dirname, '../static/schede'), { extensions: ['html'] }));
@@ -24,14 +26,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
     console.log("HOME PAGE");
 });*/
 
-// Api per JSON dati allenatore
+
+
+
+//////////////// GET APIs
+
+// [DONE] Api per JSON dati allenatore
 app.get('/datiAllenatore', (req, res) => {
     res.sendFile((path.join(__dirname, '../data/info_allenatore.json')))
     console.log("Pagina dei dati allenatore");
 });
 
 
-// Api per JSON cronologia alimentazione
+// [DONE] Api per JSON cronologia alimentazione
 app.get('/api/cronologia_alimentazione', (request, response) => {
     var data = fs.readFileSync('cronologia_alimentazione.json');
     var myObject = JSON.parse(data);
@@ -50,15 +57,17 @@ app.get('/api/cronologia_allenamento', (request, response) => {
 
 })
 
-// Api per riepilogo giornaliero allenamento
+
+// [DONE] Api per riepilogo giornaliero allenamento
 app.get('/api/riepilogo_allenamento', (request, response) => {
     var data = fs.readFileSync('cronologia_allenamento.json');
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
     var yyyy = today.getFullYear();
-    today = dd + '_' + mm + '_' + yyyy;
+    var time = today.getHours() + "." + today.getMinutes();
+    today = dd + '_' + mm + '_' + yyyy + ':' + time;
 
     var myObject = JSON.parse(data);
 
@@ -74,23 +83,65 @@ app.get('/api/riepilogo_allenamento', (request, response) => {
 })
 
 
+// [DONE] Api per ricerca nel DB di un alimento
+app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
+
+    var alimento = request.params.nome;
+    var quantità = parseFloat(request.params.quantita) / 100;
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    var time = today.getHours() + "." + today.getMinutes();
+    today = dd + '_' + mm + '_' + yyyy + ':' + time;
+
+    database.collection("Food").findOne({ nome: alimento}, function (err, result) {
+        if (err) throw err;
+
+        result["energia"] = result["energia"] * quantità; 
+        result["grassi"] = result["grassi"] * quantità; 
+        result["carboidrati"] = result["carboidrati"] * quantità; 
+        result["proteine"] = result["proteine"] * quantità; 
+        result["fibre"] = result["fibre"] * quantità; 
+        result["ferro"] = result["ferro"] * quantità; 
+        result["iodio"] = result["iodio"] * quantità; 
+        result["magnesio"] = result["magnesio"] * quantità; 
+        result["data"] = today;
+        result["quantita"] = request.params.quantita;
+        response.send(result);
+    });
+
+})
+
+
+//////////////// POST APIs
+
 // Api per inserimento nel JSON cronologia_alimentazione
-app.post('/api/cronologia_alimentazione', (request, response) => {
+app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) => {
+    // chiamiamo l'altra API
+    var valori_nutrizionali = new XMLHttpRequest();
+    valori_nutrizionali.open('GET', 'localhost:5000/api/valori_nutrizionali/' + valori_nutrizionali.params.nome + valori_nutrizionali.params.quantita, true);
+// inserire if di stato risposta api
+    var risposta;
+    valori_nutrizionali.onload = function () {
+        risposta = this.response;
+    }
 
     // lettura file json e estrazione dati
     var data = fs.readFileSync('cronologia_alimentazione.json');
     var myObject = JSON.parse(data);
 
-
+/*
     // creazione nuovo elemento da inserire da Request Parameter
     let newProduct = {
         "Name": request.body['Name'],
         "Price": request.body['Price'],
         "Location": request.body['Location']
     };
-
+*/
     //aggiunta nuovo elemento
-    myObject.products.push(newProduct);
+    myObject.products.push(risposta);
 
     //aggiornamento file json con il nuovo elemento
     var newData = JSON.stringify(myObject);
@@ -104,7 +155,8 @@ app.post('/api/cronologia_alimentazione', (request, response) => {
 })
 
 
-// [DONE] Api per inserimento nel JSON cronologia_allenamento
+// Api per inserimento nel JSON cronologia_allenamento
+// l'inserimento della data deve essere automatico, non manuale
 app.post('/api/cronologia_allenamento', (request, response) => {
 
     // lettura file json e estrazione dati
@@ -135,6 +187,9 @@ app.post('/api/cronologia_allenamento', (request, response) => {
 })
 
 
+
+
+//////////////// DELETE APIs
 // Api per eliminazione da cronologia_alimentazione
 app.delete('/api/cronologia_alimentazione/:name/:data', (request, response) => {
     var data = fs.readFileSync('cronologia_alimentazione.json');
@@ -214,12 +269,8 @@ app.listen(5000, () => {
             console.log("Errore: " + error);
         }
         else {
-            db = client.db(DATABASE);
+            database = client.db(DATABASE);
             console.log("DB connesso");
-            db.collection("Food").findOne({nome:"Pera"}, function(err, result) {
-                if (err) throw err;
-                console.log(result);
-            });
         }
     })
 
