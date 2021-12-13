@@ -3,8 +3,6 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUI = require('swagger-ui-express');
 const fs = require('fs');
 // [TO-DO] Add swaggerOptions
 
@@ -19,12 +17,48 @@ let database;
 var XMLHttpRequest = require('xhr2');
 var xhr = new XMLHttpRequest();
 
+// Swagger
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const swaggerOptions = {
+    swaggerDefinition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Express API for My Project',
+            version: '1.0.0',
+            description:
+                'This is a REST API application made with Express.',
+            license: {
+                name: 'Licensed Under MIT',
+                url: 'https://spdx.org/licenses/MIT.html',
+            },
+            contact: {
+                name: 'Group12',
+                url: 'http://localhost:5000/',
+            },
+        },
+        servers: [
+            {
+                url: 'http://localhost:5000/',
+                description: 'Development server',
+            },
+        ],
+    },
+    apis: ["index.js"]
+};
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 app.use(express.static(path.join(__dirname, '../static'), { extensions: ['html'] }));
 app.use(express.static(path.join(__dirname, '../static/schede'), { extensions: ['html'] }));
 app.use(express.static(path.join(__dirname, '../static/styles'), { extensions: ['html'] }));
 app.use(express.static(path.join(__dirname, '../data'), { extensions: ['html'] }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// cors
+var cors = require('cors')
+app.use(cors())
 
 /*app.get('/',(req,res)=>{
     console.log("HOME PAGE");
@@ -36,6 +70,37 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //////////////// GET APIs
 
 // [DONE] Api per JSON dati allenatore
+/**
+ * @swagger
+ * /api/datiAllenatore:
+ *   get:
+ *     summary: Retrieve the information about the trainer.
+ *     description: Retrieve the trainer's attributes from the Server.
+ *     responses:
+ *       200:
+ *         description: The trainer's information.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 nome:
+ *                    type: string
+ *                    description: The trainer's name.
+ *                    example: Marco
+ *                 cognome:
+ *                    type: string
+ *                    description: The trainer's last name.
+ *                    example: Matteazzi
+ *                 eta:
+ *                    type: integer
+ *                    description: The trainer's age.
+ *                    example: 36
+ *                 certificazione:
+ *                    type: string
+ *                    description: The triner's certification.
+ *                    example: FIPE
+ */
 app.get('/api/datiAllenatore', (req, res) => {
     res.sendFile((path.join(__dirname, '../data/info_allenatore.json')));
     //console.log("Pagina dei dati allenatore");
