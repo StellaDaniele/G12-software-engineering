@@ -9,6 +9,7 @@ const fs = require('fs');
 // MongoDB
 const mongodb = require('mongodb').MongoClient;
 const { type } = require('os');
+//const { request, response } = require("express");
 const CONNECTION_STRING = "mongodb+srv://G12:1aRI17qvJk67R@g12-nutritionfacts.sxr24.mongodb.net/test";
 const DATABASE = "Food";
 let database;
@@ -108,6 +109,79 @@ app.get('/api/datiAllenatore', (req, res) => {
 
 
 // [DONE] Api per JSON cronologia alimentazione
+/**
+ * @swagger
+ * /api/cronologia_alimentazione:
+ *   get:
+ *     summary: Retrieve a list of foods.
+ *     description: Retrieve a list of foods from the Server.
+ *     responses:
+ *       200:
+ *         description: A list of foods.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       nome:
+ *                         type: string
+ *                         description: The food's name.
+ *                         example: Banana
+ *                       energia:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's energy.
+ *                         example: 78.072
+ *                       grassi:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's fats.
+ *                         example: 0.13
+ *                       carboidrati:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's carbos.
+ *                         example: 26.024
+ *                       proteine:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's proteins.
+ *                         example: 1.04
+ *                       fibre:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's fibers.
+ *                         example: 13.012
+ *                       ferro:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's iron.
+ *                         example: 1.17
+ *                       iodio:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's iodine.
+ *                         example: 0.013
+ *                       magnesio:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's magnesium.
+ *                         example: 1.171
+ *                       data:
+ *                          type: string
+ *                          description: The food's consummation date.
+ *                          example: 12_12_2021:21.43
+ *                       quantita:
+ *                          type: number
+ *                          format: float
+ *                          description: The food's quantity assumed.
+ *                          example: 130.12
+ */
 app.get('/api/cronologia_alimentazione', (request, response) => {
     var data = fs.readFileSync('cronologia_alimentazione.json');
     var myObject = JSON.parse(data);
@@ -117,7 +191,45 @@ app.get('/api/cronologia_alimentazione', (request, response) => {
 })
 
 
+
 // [DONE] Api per JSON cronologia allenamento
+/**
+ * @swagger
+ * /api/cronologia_allenamento:
+ *   get:
+ *     summary: Retrieve a list of activities.
+ *     description: Retrieve a list of activities from the Server.
+ *     responses:
+ *       200:
+ *         description: A list of activities.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       nome:
+ *                         type: string
+ *                         description: The activity's name.
+ *                         example: Salti
+ *                       tempo:
+ *                         type: integer
+ *                         description: The activity time.
+ *                         example: 85
+ *                       energia_bruciata:
+ *                         type: number
+ *                         format: float
+ *                         description: The activity's energy burnt [kcal].
+ *                         example: 654.1
+ *                       data:
+ *                          type: string
+ *                          description: The activity's date.
+ *                          example: 12_12_2021:16.44
+ */
 app.get('/api/cronologia_allenamento', (request, response) => {
     var data = fs.readFileSync('cronologia_allenamento.json');
     var myObject = JSON.parse(data);
@@ -128,6 +240,43 @@ app.get('/api/cronologia_allenamento', (request, response) => {
 
 
 // [DONE] Api per riepilogo giornaliero allenamento
+/**
+ * @swagger
+ * /api/riepilogo_allenamento:
+ *   get:
+ *     summary: Retrieve a list of activities.
+ *     description: Retrieve a list of activities from the Server.
+ *     responses:
+ *       200:
+ *         description: A list of activities.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       nome:
+ *                         type: string
+ *                         description: The activity's name.
+ *                         example: Salti
+ *                       tempo:
+ *                         type: integer
+ *                         description: The activity time.
+ *                         example: 85
+ *                       energia_bruciata:
+ *                         type: number
+ *                         format: float
+ *                         description: The activity's energy burnt [kcal].
+ *                         example: 654.1
+ *                       data:
+ *                          type: string
+ *                          description: The activity's date.
+ *                          example: 12_12_2021:16.44
+ */
 app.get('/api/riepilogo_allenamento', (request, response) => {
     var data = fs.readFileSync('cronologia_allenamento.json');
 
@@ -156,6 +305,79 @@ app.get('/api/riepilogo_allenamento', (request, response) => {
 })
 
 // [DONE] Api per riepilogo giornaliero alimentazione
+/**
+ * @swagger
+ * /api/riepilogo_alimentazione:
+ *   get:
+ *     summary: Retrieve a list of foods.
+ *     description: Retrieve a list of foods from the Server.
+ *     responses:
+ *       200:
+ *         description: A list of foods.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       nome:
+ *                         type: string
+ *                         description: The food's name.
+ *                         example: Banana
+ *                       energia:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's energy.
+ *                         example: 78.072
+ *                       grassi:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's fats.
+ *                         example: 0.13
+ *                       carboidrati:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's carbos.
+ *                         example: 26.024
+ *                       proteine:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's proteins.
+ *                         example: 1.04
+ *                       fibre:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's fibers.
+ *                         example: 13.012
+ *                       ferro:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's iron.
+ *                         example: 1.17
+ *                       iodio:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's iodine.
+ *                         example: 0.013
+ *                       magnesio:
+ *                         type: number
+ *                         format: float
+ *                         description: The food's magnesium.
+ *                         example: 1.171
+ *                       data:
+ *                          type: string
+ *                          description: The food's consummation date.
+ *                          example: 12_12_2021:21.43
+ *                       quantita:
+ *                          type: number
+ *                          format: float
+ *                          description: The food's quantity assumed.
+ *                          example: 130.12
+ */
 app.get('/api/riepilogo_alimentazione', (request, response) => {
     var data = fs.readFileSync('cronologia_alimentazione.json');
 
@@ -186,6 +408,87 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
 
 
 // [DONE] Api per ricerca nel DB di un alimento
+/**
+ * @swagger
+ * /api/valori_nutrizionali/{nome}/{quantita}:
+ *   get:
+ *     summary: Retrieve the information about a given food.
+ *     description: Retrieve the given food's information from the Server.
+ *     parameters:
+ *       - in: path
+ *         name: nome
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the food's name.
+ *       - in: path
+ *         name: quantita
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the quantity assumed.
+ *     responses:
+ *       200:
+ *         description: The given food's information.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 nome:
+ *                    type: string
+ *                    description: The food's name.
+ *                    example: Banana
+ *                 energia:
+ *                    type: number
+ *                    format: float
+ *                    description: The food's energy.
+ *                    example: 78.072
+ *                 grassi:
+ *                    type: number
+ *                    format: float
+ *                    description: The food's fats.
+ *                    example: 0.13
+ *                 carboidrati:
+ *                    type: number
+ *                    format: float
+ *                    description: The food's carbos.
+ *                    example: 26.024
+ *                 proteine:
+ *                    type: number
+ *                    format: float
+ *                    description: The food's proteins.
+ *                    example: 1.04
+ *                 fibre:
+ *                    type: number
+ *                    format: float
+ *                    description: The food's fibers.
+ *                    example: 13.012
+ *                 ferro:
+ *                    type: number
+ *                    format: float
+ *                    description: The food's iron.
+ *                    example: 1.17
+ *                 iodio:
+ *                    type: number
+ *                    format: float
+ *                    description: The food's iodine.
+ *                    example: 0.013
+ *                 magnesio:
+ *                    type: number
+ *                    format: float
+ *                    description: The food's magnesium.
+ *                    example: 1.171
+ *                 data:
+ *                    type: string
+ *                    description: The food's consummation date.
+ *                    example: 12_12_2021:21.43
+ *                 quantita:
+ *                    type: number
+ *                    format: float
+ *                    description: The food's quantity assumed.
+ *                    example: 130.12
+ */
 app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
     var alimento = request.params.nome;
     var quantità = parseFloat(request.params.quantita) / 100;
