@@ -24,14 +24,18 @@
 
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">Cronologia pasti e allenamenti</a>
+    <a href="/cronologia">Cronologia pasti e allenamenti</a>
     <a href="/le mie schede">Le mie schede</a>
     <a href="/allenatore">Allenatore</a>
   </div>
 
-  <div id="main">
+  <!--<div id="main">-->
+  <div class="split left">
+    <div class="centered">
     <h1>Riepilogo giornaliero</h1>
     <hr />
+    <label for="kcal">Energia:</label> 
+    <span type="text" id="anome" name="anome" readonly></span>kcal<br><br>
     <span class="span" style="background-color: green"></span>Carbs
     <span class="span" style="background-color: red"></span>Proteins
     <span class="span" style="background-color: blue"></span>Fats
@@ -42,7 +46,70 @@
     <br />
     <progress id="fat" value="32" max="100"></progress>
     <button class="plus-button"><i class="fa fa-plus"></i></button>
+    <br>
+
+    <label for="micronutrienti">micronutrienti assunti:</label>
+    <br>
+    <label for="fibre">Fibre:</label> 
+    <span type="text" id="fibre" name="fibre" aria-readonly></span> mg<br>
+    <label for="ferro">Ferro:</label> 
+    <span type="text" id="ferro" name="ferro" aria-readonly></span> mg<br>
+    <label for="iodio">Iodio:</label> 
+    <span type="text" id="iodio" name="iodio" aria-readonly></span> mg<br>
+    <label for="magnesio">Magnesio:</label> 
+    <span type="text" id="magnesio" name="magnesio" aria-readonly></span> mg<br>
+    </div>
   </div>
+
+
+  <div class="split right">
+    <div class="centered">
+    <label for="alimentazine"><h2>Alimentazione:</h2></label>
+    <style type="text/css">
+      .tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+      .tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#444;
+        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#fff;
+        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg .tg-5agr{border-color:inherit;color:#343434;text-align:left;vertical-align:top}
+      .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+      </style>
+      <table class="tg">
+      <thead>
+        <tr>
+          <td class="tg-5agr">Nome</td>
+          <td class="tg-0pky">Quantità</td>
+        </tr>
+      </thead>
+      </table>
+      <button class="aggiungi-pasto"style="font-size:24px"><i class="fa fa-plus"></i></button>
+      <button class="rimuovi-pasto"style="font-size:24px"><i class="fa fa-trash-o"></i></button>
+      
+      
+    <label for="allenamenti"><h2>Allenamenti:</h2></label>
+    <style type="text/css">
+      .tg  {border-collapse:collapse;border-color:#9ABAD9;border-spacing:0;}
+      .tg td{background-color:#EBF5FF;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#444;
+        font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg th{background-color:#409cff;border-color:#9ABAD9;border-style:solid;border-width:0px;color:#fff;
+        font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+      .tg .tg-5agr{border-color:inherit;color:#343434;text-align:left;vertical-align:top}
+      .tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+      </style>
+      <table class="tg">
+      <thead>
+        <tr>
+          <td class="tg-5agr">Nome</td>
+          <td class="tg-0pky">Tempo</td>
+          <td class="tg-0pky">Kcal</td>
+        </tr>
+      </thead>
+      </table>
+      <button class="aggiungi-allenamento" style="font-size:24px"><i class="fa fa-plus"></i></button>
+      <button class="rimuovi-allenamento"style="font-size:24px"><i class="fa fa-trash-o"></i></button>
+
+      </div>
+  </div>  
 </body>
 
 </html>
