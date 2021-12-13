@@ -77,6 +77,8 @@ app.use(cors())
  *   get:
  *     summary: Retrieve the information about the trainer.
  *     description: Retrieve the trainer's attributes from the Server.
+ *     tags:
+ *       - Main GET APIs
  *     responses:
  *       200:
  *         description: The trainer's information.
@@ -113,8 +115,10 @@ app.get('/api/datiAllenatore', (req, res) => {
  * @swagger
  * /api/cronologia_alimentazione:
  *   get:
- *     summary: Retrieve a list of foods.
- *     description: Retrieve a list of foods from the Server.
+ *     summary: Retrieve the consummations history.
+ *     description: Retrieve a list of foods, which is the consummations history, from the Server.
+ *     tags:
+ *       - Main GET APIs
  *     responses:
  *       200:
  *         description: A list of foods.
@@ -135,7 +139,7 @@ app.get('/api/datiAllenatore', (req, res) => {
  *                       energia:
  *                         type: number
  *                         format: float
- *                         description: The food's energy.
+ *                         description: The food's energy [kcal].
  *                         example: 78.072
  *                       grassi:
  *                         type: number
@@ -145,7 +149,7 @@ app.get('/api/datiAllenatore', (req, res) => {
  *                       carboidrati:
  *                         type: number
  *                         format: float
- *                         description: The food's carbos.
+ *                         description: The food's carbs.
  *                         example: 26.024
  *                       proteine:
  *                         type: number
@@ -179,7 +183,7 @@ app.get('/api/datiAllenatore', (req, res) => {
  *                       quantita:
  *                          type: number
  *                          format: float
- *                          description: The food's quantity assumed.
+ *                          description: The food's quantity consummed.
  *                          example: 130.12
  */
 app.get('/api/cronologia_alimentazione', (request, response) => {
@@ -197,8 +201,10 @@ app.get('/api/cronologia_alimentazione', (request, response) => {
  * @swagger
  * /api/cronologia_allenamento:
  *   get:
- *     summary: Retrieve a list of activities.
- *     description: Retrieve a list of activities from the Server.
+ *     summary: Retrieve the workouts history.
+ *     description: Retrieve a list of activities, which is the workouts history, from the Server.
+ *     tags:
+ *       - Main GET APIs
  *     responses:
  *       200:
  *         description: A list of activities.
@@ -218,16 +224,16 @@ app.get('/api/cronologia_alimentazione', (request, response) => {
  *                         example: Salti
  *                       tempo:
  *                         type: integer
- *                         description: The activity time.
+ *                         description: The training time.
  *                         example: 85
  *                       energia_bruciata:
  *                         type: number
  *                         format: float
- *                         description: The activity's energy burnt [kcal].
+ *                         description: The energy burnt [kcal].
  *                         example: 654.1
  *                       data:
  *                          type: string
- *                          description: The activity's date.
+ *                          description: The workout date.
  *                          example: 12_12_2021:16.44
  */
 app.get('/api/cronologia_allenamento', (request, response) => {
@@ -244,8 +250,10 @@ app.get('/api/cronologia_allenamento', (request, response) => {
  * @swagger
  * /api/riepilogo_allenamento:
  *   get:
- *     summary: Retrieve a list of activities.
- *     description: Retrieve a list of activities from the Server.
+ *     summary: Retrieve the daily workout summary.
+ *     description: Retrieve a list of activities, which is the daily workout summary, from the Server.
+ *     tags:
+ *       - Main GET APIs
  *     responses:
  *       200:
  *         description: A list of activities.
@@ -265,16 +273,16 @@ app.get('/api/cronologia_allenamento', (request, response) => {
  *                         example: Salti
  *                       tempo:
  *                         type: integer
- *                         description: The activity time.
+ *                         description: The training time.
  *                         example: 85
  *                       energia_bruciata:
  *                         type: number
  *                         format: float
- *                         description: The activity's energy burnt [kcal].
+ *                         description: The energy burnt [kcal].
  *                         example: 654.1
  *                       data:
  *                          type: string
- *                          description: The activity's date.
+ *                          description: The workout date.
  *                          example: 12_12_2021:16.44
  */
 app.get('/api/riepilogo_allenamento', (request, response) => {
@@ -309,8 +317,10 @@ app.get('/api/riepilogo_allenamento', (request, response) => {
  * @swagger
  * /api/riepilogo_alimentazione:
  *   get:
- *     summary: Retrieve a list of foods.
- *     description: Retrieve a list of foods from the Server.
+ *     summary: Retrieve the daily consummations summary.
+ *     description: Retrieve a list of foods, which is the daily consummations summary, from the Server.
+ *     tags:
+ *       - Main GET APIs
  *     responses:
  *       200:
  *         description: A list of foods.
@@ -331,7 +341,7 @@ app.get('/api/riepilogo_allenamento', (request, response) => {
  *                       energia:
  *                         type: number
  *                         format: float
- *                         description: The food's energy.
+ *                         description: The food's energy [kcal].
  *                         example: 78.072
  *                       grassi:
  *                         type: number
@@ -341,7 +351,7 @@ app.get('/api/riepilogo_allenamento', (request, response) => {
  *                       carboidrati:
  *                         type: number
  *                         format: float
- *                         description: The food's carbos.
+ *                         description: The food's carbs.
  *                         example: 26.024
  *                       proteine:
  *                         type: number
@@ -375,7 +385,7 @@ app.get('/api/riepilogo_allenamento', (request, response) => {
  *                       quantita:
  *                          type: number
  *                          format: float
- *                          description: The food's quantity assumed.
+ *                          description: The food's quantity consummed.
  *                          example: 130.12
  */
 app.get('/api/riepilogo_alimentazione', (request, response) => {
@@ -410,23 +420,26 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
 // [DONE] Api per ricerca nel DB di un alimento
 /**
  * @swagger
- * /api/valori_nutrizionali/{nome}/{quantita}:
+ * /api/valori_nutrizionali/{name}/{quantity}:
  *   get:
  *     summary: Retrieve the information about a given food.
- *     description: Retrieve the given food's information from the Server.
+ *     description: Retrieve the given food's information from the external DB.
+ *     tags:
+ *       - Main GET APIs
  *     parameters:
  *       - in: path
- *         name: nome
+ *         name: name
  *         schema:
  *             type: string
  *         required: true
  *         description: the food's name.
  *       - in: path
- *         name: quantita
+ *         name: quantity
  *         schema:
- *             type: string
+ *             type: number
+ *             format: float
  *         required: true
- *         description: the quantity assumed.
+ *         description: the quantity consummed.
  *     responses:
  *       200:
  *         description: The given food's information.
@@ -442,7 +455,7 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
  *                 energia:
  *                    type: number
  *                    format: float
- *                    description: The food's energy.
+ *                    description: The food's energy [kcal].
  *                    example: 78.072
  *                 grassi:
  *                    type: number
@@ -452,7 +465,7 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
  *                 carboidrati:
  *                    type: number
  *                    format: float
- *                    description: The food's carbos.
+ *                    description: The food's carbs.
  *                    example: 26.024
  *                 proteine:
  *                    type: number
@@ -486,8 +499,15 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
  *                 quantita:
  *                    type: number
  *                    format: float
- *                    description: The food's quantity assumed.
+ *                    description: The food's quantity consummed.
  *                    example: 130.12
+ *       419:   
+ *         description: Unexpected token
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: The food you are looking for is not available in the DB.
  */
 app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
     var alimento = request.params.nome;
@@ -502,18 +522,23 @@ app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
 
     database.collection("Food").findOne({ nome: alimento }, function (err, result) {
         if (err) throw err;
-
-        result["energia"] = result["energia"] * quantità;
-        result["grassi"] = result["grassi"] * quantità;
-        result["carboidrati"] = result["carboidrati"] * quantità;
-        result["proteine"] = result["proteine"] * quantità;
-        result["fibre"] = result["fibre"] * quantità;
-        result["ferro"] = result["ferro"] * quantità;
-        result["iodio"] = result["iodio"] * quantità;
-        result["magnesio"] = result["magnesio"] * quantità;
-        result["data"] = today;
-        result["quantita"] = parseFloat(request.params.quantita);
-        response.send(result);
+        if (result == null) {
+            response.status(419);
+            response.send("The food you are looking for is not available in the DB.");
+        }
+        else {
+            result["energia"] = Math.round(result["energia"] * quantità * 1000) / 1000;
+            result["grassi"] = Math.round(result["grassi"] * quantità * 1000) / 1000;
+            result["carboidrati"] = Math.round(result["carboidrati"] * quantità * 1000) / 1000;
+            result["proteine"] = Math.round(result["proteine"] * quantità * 1000) / 1000;
+            result["fibre"] = Math.round(result["fibre"] * quantità * 1000) / 1000;
+            result["ferro"] = Math.round(result["ferro"] * quantità * 1000) / 1000;
+            result["iodio"] = Math.round(result["iodio"] * quantità * 1000) / 1000;
+            result["magnesio"] = Math.round(result["magnesio"] * quantità * 1000) / 1000;
+            result["data"] = today;
+            result["quantita"] = parseFloat(request.params.quantita);
+            response.send(result);
+        }
     });
 
 })
@@ -522,6 +547,39 @@ app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
 //////////////// POST APIs
 
 // Api per inserimento nel JSON cronologia_alimentazione
+/**
+ * @swagger
+ * /api/cronologia_alimentazione/{name}/{quantity}:
+ *   post:
+ *     summary: Insert the given food into the consummation history.
+ *     description: Insert in the consummations history the given food's information after the call to the external DB.
+ *     tags:
+ *       - Main POST APIs
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the food's name.
+ *       - in: path
+ *         name: quantity
+ *         schema:
+ *             type: number
+ *             format: float
+ *         required: true
+ *         description: the quantity consummed.
+ *     responses:
+ *       201:
+ *         description: The given food's information.
+ *       419:   
+ *         description: Unexpected token
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: The food you are looking for is not available in the DB.
+ */
 app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) => {
     // chiamiamo l'altra API
     var valori_nutrizionali = new XMLHttpRequest();
@@ -531,33 +589,67 @@ app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) =>
     valori_nutrizionali.open('GET', stringa);
     valori_nutrizionali.send();
 
-    // inserire if di stato risposta api
-    var risposta;
     valori_nutrizionali.onload = function () {
-        risposta = this.response;
+        if (this.status === 419){
+            response.status(this.status);
+            response.send(this.response);
+        }
+        else {
+            // lettura file json e estrazione dati
+            var data = fs.readFileSync('cronologia_alimentazione.json');
+            var myObject = JSON.parse(data);
 
-        // lettura file json e estrazione dati
-        var data = fs.readFileSync('cronologia_alimentazione.json');
-        var myObject = JSON.parse(data);
+            //aggiunta nuovo elemento
+            myObject.push(JSON.parse(this.response));
 
-        //aggiunta nuovo elemento
-        myObject.push(JSON.parse(risposta));
+            //aggiornamento file json con il nuovo elemento
+            var newData = JSON.stringify(myObject);
+            fs.writeFile('cronologia_alimentazione.json', newData, err => {
+                // error checking
+                if (err) throw err;
 
-        //aggiornamento file json con il nuovo elemento
-        var newData = JSON.stringify(myObject);
-        fs.writeFile('cronologia_alimentazione.json', newData, err => {
-            // error checking
-            if (err) throw err;
+            });
 
-        });
-
-        response.json("Prodotto Aggiunto Correttamente: (" + myObject.length + ")");
+            response.json("Prodotto Aggiunto Correttamente: (" + myObject.length + ")");
+        }
     }
 })
 
 
 // Api per inserimento nel JSON cronologia_allenamento
 // l'inserimento della data deve essere automatico, non manuale
+/**
+ * @swagger
+ * /api/cronologia_allenamento:
+ *   post:
+ *     summary: Insert the given activity into the workouts history.
+ *     description: Insert the given activity into the workouts history
+ *     tags:
+ *       - Main POST APIs
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nome:
+ *                 type: string
+ *                 description: The activity's name.
+ *                 example: Salti
+ *               tempo:
+ *                 type: integer
+ *                 description: The training time.
+ *                 example: 85
+ *               energia_bruciata:
+ *                 type: number
+ *                 format: float
+ *                 description: The energy burnt [kcal].
+ *                 example: 654.1
+ *     responses:
+ *       201:
+ *         description: successful executed
+*/
 app.post('/api/cronologia_allenamento', (request, response) => {
 
     // lettura file json e estrazione dati
@@ -598,6 +690,31 @@ app.post('/api/cronologia_allenamento', (request, response) => {
 
 //////////////// DELETE APIs
 // [DONE] Api per eliminazione da cronologia_alimentazione
+/**
+ * @swagger
+ * /api/cronologia_alimentazione/{name}/{date}:
+ *   delete:
+ *     summary: Delete the given food from the consummation history.
+ *     description: Delete the given food from the consummation history.
+ *     tags:
+ *       - Main DELETE APIs
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the food's name.
+ *       - in: path
+ *         name: date
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the date of consummation [dd_mm_yyyy:hh.mm].
+ *     responses:
+ *       201:
+ *         description: the food was deleted.
+ */
 app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
     var data = fs.readFileSync('cronologia_alimentazione.json');
     var myObject = JSON.parse(data);
@@ -617,6 +734,31 @@ app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
 })
 
 // [DONE] Api per eliminazione da cronologia_allenamento
+/**
+ * @swagger
+ * /api/cronologia_allenamento/{name}/{date}:
+ *   delete:
+ *     summary: Delete the given activity from the workouts history.
+ *     description: Delete the given activity from the workouts history.
+ *     tags:
+ *       - Main DELETE APIs
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the activity's name.
+ *       - in: path
+ *         name: date
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the workout date [dd_mm_yyyy:hh.mm].
+ *     responses:
+ *       201:
+ *         description: the activity was deleted.
+ */
 app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
     var data = fs.readFileSync('cronologia_allenamento.json');
     var myObject = JSON.parse(data);
@@ -638,11 +780,29 @@ app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
 
 
 
-
-//////////////// UTILITY APIs
+//////////////// UTILITY GET APIs
 
 // Api per calorie assunte
-app.get('/api/calorie_assunte', (request, response) => {
+/**
+ * @swagger
+ * /api/calorie_assunte:
+ *   get:
+ *     summary: Retrieve the daily energy intake [kcal].
+ *     description: Retrieve the daily energy intake [kcal] from the Server.
+ *     tags:
+ *       - Utility APIs
+ *     responses:
+ *       200:
+ *         description: The daily energy intake [kcal].
+ *         schema:
+ *           type: object
+ *           properties:
+ *             kcal:
+ *                type: string
+ *                description: The daily intake [kcal].
+ *                example: 432
+ */
+ app.get('/api/calorie_assunte', (request, response) => {
     var data = fs.readFileSync('cronologia_alimentazione.json');
 
     var today = new Date();
@@ -671,7 +831,28 @@ app.get('/api/calorie_assunte', (request, response) => {
 })
 
 
+
+
 // Api per calorie bruciate
+/**
+ * @swagger
+ * /api/calorie_bruciate:
+ *   get:
+ *     summary: Retrieve the daily burnt kcal.
+ *     description: Retrieve the daily burnt kcal from the Server.
+ *     tags:
+ *       - Utility APIs
+ *     responses:
+ *       200:
+ *         description: The daily burnt kcal.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             kcal:
+ *                type: string
+ *                description: The kcal burnt.
+ *                example: 432
+ */
 app.get('/api/calorie_bruciate', (request, response) => {
     var data = fs.readFileSync('cronologia_allenamento.json');
 
@@ -699,6 +880,7 @@ app.get('/api/calorie_bruciate', (request, response) => {
 
     response.json(totale);
 })
+
 
 
 
