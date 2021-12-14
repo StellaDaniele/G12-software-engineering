@@ -58,7 +58,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // cors
-var cors = require('cors')
+var cors = require('cors');
+const e = require('express');
 app.use(cors())
 
 /*app.get('/',(req,res)=>{
@@ -102,11 +103,12 @@ app.use(cors())
  *                 certificazione:
  *                    type: string
  *                    description: The triner's certification.
- *                    example: FIPE
+ *                    example: FIPE     
  */
-app.get('/api/datiAllenatore', (req, res) => {
-    res.sendFile((path.join(__dirname, '../data/info_allenatore.json')));
-    //console.log("Pagina dei dati allenatore");
+app.get('/api/datiAllenatore', (request, response) => {
+    var data = fs.readFileSync('../data/info_allenatore.json');
+    var myObject = JSON.parse(data);
+    response.send(myObject);
 });
 
 
@@ -308,6 +310,7 @@ app.get('/api/riepilogo_allenamento', (request, response) => {
             riepilogo.push(myObject[i]);
         }
     }
+    //response.status(200);
     response.send(riepilogo);
 
 })
@@ -417,6 +420,304 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
 })
 
 
+
+//////////////// POST APIs
+
+// Api per inserimento nel JSON cronologia_alimentazione
+/**
+ * @swagger
+ * /api/cronologia_alimentazione/{name}/{quantity}:
+ *   post:
+ *     summary: Insert the given food into the consummation history.
+ *     description: Insert in the consummations history the given food's information after the call to the external DB.
+ *     tags:
+ *       - Main POST APIs
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the food's name.
+ *       - in: path
+ *         name: quantity
+ *         schema:
+ *             type: number
+ *             format: float
+ *         required: true
+ *         description: the quantity consummed.
+ *     responses:
+ *       201:
+ *         description: The given food's information.
+ *       400:   
+ *         description: Bad request, the quantity entered was either negative or not a number.
+ *       404:   
+ *         description: The food searched is not available in the database.
+ */
+app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) => {
+    // chiamiamo l'altra API
+    var valori_nutrizionali = new XMLHttpRequest();
+
+    var stringa = 'http://localhost:5000/api/valori_nutrizionali/' + request.params.nome + '/' + request.params.quantita;
+
+    valori_nutrizionali.open('GET', stringa);
+    valori_nutrizionali.send();
+
+    valori_nutrizionali.onload = function () {
+        if (this.status === 404 || this.status === 400) {
+            response.status(this.status);
+            response.send(this.response);
+        }
+        else {
+            // lettura file json e estrazione dati
+            var data = fs.readFileSync('cronologia_alimentazione.json');
+            var myObject = JSON.parse(data);
+
+            //aggiunta nuovo elemento
+            myObject.push(JSON.parse(this.response));
+
+            //aggiornamento file json con il nuovo elemento
+            var newData = JSON.stringify(myObject);
+            fs.writeFile('cronologia_alimentazione.json', newData, err => {
+                // error checking
+                if (err) throw err;
+
+            });
+
+            response.json("Prodotto Aggiunto Correttamente: (" + myObject.length + ")");
+        }
+    }
+})
+
+
+// Api per inserimento nel JSON cronologia_allenamento
+// l'inserimento della data deve essere automatico, non manuale
+/**
+ * @swagger
+ * /api/cronologia_allenamento:
+ *   post:
+ *     summary: Insert the given activity into the workouts history.
+ *     description: Insert the given activity into the workouts history
+ *     tags:
+ *       - Main POST APIs
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nome:
+ *                 type: string
+ *                 description: The activity's name.
+ *                 example: Salti
+ *               tempo:
+ *                 type: integer
+ *                 description: The training time.
+ *                 example: 85
+ *               energia_bruciata:
+ *                 type: number
+ *                 format: float
+ *                 description: The energy burnt [kcal].
+ *                 example: 654.1
+ *     responses:
+ *       201:
+ *         description: successful executed
+ *       400:   
+ *         description: The JSON entered was malformed or the content didn't satisfy the requirements (a negative or NaN time, energy, ...)
+*/
+app.post('/api/cronologia_allenamento', (request, response) => {
+
+    // lettura file json e estrazione dati
+    var data = fs.readFileSync('cronologia_allenamento.json');
+    try {
+        var myObject = JSON.parse(data);
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        var time = today.getHours() + "." + today.getMinutes();
+        today = dd + '_' + mm + '_' + yyyy + ':' + time;
+
+        // creazione nuovo elemento da inserire da Request Parameter
+        if (request.body['nome'] == null || isNaN(parseInt(request.body['tempo'])) || parseInt(request.body['tempo']) <= 0 || isNaN(parseInt(request.body['energia_bruciata'])) || parseFloat(request.body['energia_bruciata']) <= 0.0)
+            throw e;
+        let nuovaAttività = {
+            "nome": request.body['nome'],
+            "tempo": parseInt(request.body['tempo']),
+            "energia_bruciata": request.body['energia_bruciata'],
+            "data": today
+        };
+
+        //aggiunta nuovo elemento
+        myObject.push(nuovaAttività);
+
+        //aggiornamento file json con il nuovo elemento
+        var newData = JSON.stringify(myObject);
+        fs.writeFile('cronologia_allenamento.json', newData, err => {
+            // error checking
+            if (err) throw err;
+
+        });
+
+        response.json("Attività aggiunta correttamente: (" + myObject.length + ")");
+    } catch (e) {
+        response.status(400);
+        response.send("The JSON entered was malformed or the content didn't satisfy the requirements (a negative or NaN time, energy, ...)");
+    }
+})
+
+
+
+
+//////////////// DELETE APIs
+// [DONE] Api per eliminazione da cronologia_alimentazione
+/**
+ * @swagger
+ * /api/cronologia_alimentazione/{name}/{date}:
+ *   delete:
+ *     summary: Delete the given food from the consummation history.
+ *     description: Delete the given food from the consummation history.
+ *     tags:
+ *       - Main DELETE APIs
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the food's name.
+ *       - in: path
+ *         name: date
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the date of consummation [dd_mm_yyyy:hh.mm].
+ *     responses:
+ *       201:
+ *         description: the food was deleted.
+ *       304:
+ *         description: Nothing has been deleted, the data you want to delete is not in the consummation history.
+ *       400:
+ *         description: The date entered doesn't satisfy the requirements.
+ */
+app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
+    var data = fs.readFileSync('cronologia_alimentazione.json');
+    var myObject = JSON.parse(data);
+
+    if (request.params.data.length < 14) {
+        response.status(400);
+        response.send("The date entered doesn't satisfy the requirements.");
+    }
+    else {
+        var contenuti_prima = 0;
+        for (let [i] of myObject.entries()) {
+            contenuti_prima++;
+        }
+
+        for (let [i] of myObject.entries()) {
+            if (myObject[i].nome === request.params.nome && myObject[i].data === request.params.data) {
+                myObject.splice(i, 1);
+            }
+        }
+
+        var contenuti_dopo = 0;
+        for (let [i] of myObject.entries()) {
+            contenuti_dopo++;
+        }
+
+        if (contenuti_prima == contenuti_dopo) {
+            response.status(304);
+            response.send("Nothing has been deleted, the data you want to delete is not in the consummation history.");
+        }
+        else {
+            //memorizzo il nuovo JSON dopo la cancellazione
+            var newData = JSON.stringify(myObject);
+            fs.writeFile('cronologia_alimentazione.json', newData, err => {
+                // error checking
+                if (err) throw err;
+            });
+            response.json("Deleted Successfully: " + myObject.length);
+        }
+    }
+})
+
+// [DONE] Api per eliminazione da cronologia_allenamento
+/**
+ * @swagger
+ * /api/cronologia_allenamento/{name}/{date}:
+ *   delete:
+ *     summary: Delete the given activity from the workouts history.
+ *     description: Delete the given activity from the workouts history.
+ *     tags:
+ *       - Main DELETE APIs
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the activity's name.
+ *       - in: path
+ *         name: date
+ *         schema:
+ *             type: string
+ *         required: true
+ *         description: the workout date [dd_mm_yyyy:hh.mm].
+ *     responses:
+ *       201:
+ *         description: the activity was deleted.
+ *       304:
+ *         description: Nothing has been deleted, the data you want to delete is not in the workouts history.
+ *       400:
+ *         description: The date entered doesn't satisfy the requirements.
+ */
+app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
+    var data = fs.readFileSync('cronologia_allenamento.json');
+    var myObject = JSON.parse(data);
+
+    if (request.params.data.length < 14) {
+        response.status(400);
+        response.send("The date entered doesn't satisfy the requirements.");
+    }
+    else {
+        var contenuti_prima = 0;
+        for (let [i] of myObject.entries()) {
+            contenuti_prima++;
+        }
+
+        for (let [i] of myObject.entries()) {
+            if (myObject[i].nome === request.params.nome && myObject[i].data === request.params.data) {
+                myObject.splice(i, 1);
+            }
+        }
+
+        var contenuti_dopo = 0;
+        for (let [i] of myObject.entries()) {
+            contenuti_dopo++;
+        }
+
+        if (contenuti_prima == contenuti_dopo) {
+            response.status(304);
+            response.send("Nothing has been deleted, the data you want to delete is not in the workouts history.");
+        }
+        else {
+            //memorizzo il nuovo JSON dopo la cancellazione
+            var newData = JSON.stringify(myObject);
+            fs.writeFile('cronologia_allenamento.json', newData, err => {
+                // error checking
+                if (err) throw err;
+            });
+            response.json("Deleted Successfully: " + myObject.length);
+        }
+    }
+})
+
+
+
+//////////////// UTILITY GET APIs
+
 // [DONE] Api per ricerca nel DB di un alimento
 /**
  * @swagger
@@ -425,7 +726,7 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
  *     summary: Retrieve the information about a given food.
  *     description: Retrieve the given food's information from the external DB.
  *     tags:
- *       - Main GET APIs
+ *       - Utility APIs
  *     parameters:
  *       - in: path
  *         name: name
@@ -501,286 +802,50 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
  *                    format: float
  *                    description: The food's quantity consummed.
  *                    example: 130.12
- *       419:   
- *         description: Unexpected token
- *         content:
- *           text/plain:
- *             schema:
- *               type: string
- *               example: The food you are looking for is not available in the DB.
+ *       400:   
+ *         description: Bad request, the quantity entered was either negative or not a number.
+ *       404:   
+ *         description: The food searched is not available in the database.
  */
-app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
+ app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
     var alimento = request.params.nome;
-    var quantità = parseFloat(request.params.quantita) / 100;
 
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-    var time = today.getHours() + "." + today.getMinutes();
-    today = dd + '_' + mm + '_' + yyyy + ':' + time;
+    try {
+        var quantità = parseFloat(request.params.quantita) / 100;
+        if (isNaN(quantità) || quantità <= 0) throw e;
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
+        var yyyy = today.getFullYear();
+        var time = today.getHours() + "." + today.getMinutes();
+        today = dd + '_' + mm + '_' + yyyy + ':' + time;
 
-    database.collection("Food").findOne({ nome: alimento }, function (err, result) {
-        if (err) throw err;
-        if (result == null) {
-            response.status(419);
-            response.send("The food you are looking for is not available in the DB.");
-        }
-        else {
-            result["energia"] = Math.round(result["energia"] * quantità * 1000) / 1000;
-            result["grassi"] = Math.round(result["grassi"] * quantità * 1000) / 1000;
-            result["carboidrati"] = Math.round(result["carboidrati"] * quantità * 1000) / 1000;
-            result["proteine"] = Math.round(result["proteine"] * quantità * 1000) / 1000;
-            result["fibre"] = Math.round(result["fibre"] * quantità * 1000) / 1000;
-            result["ferro"] = Math.round(result["ferro"] * quantità * 1000) / 1000;
-            result["iodio"] = Math.round(result["iodio"] * quantità * 1000) / 1000;
-            result["magnesio"] = Math.round(result["magnesio"] * quantità * 1000) / 1000;
-            result["data"] = today;
-            result["quantita"] = parseFloat(request.params.quantita);
-            response.send(result);
-        }
-    });
-
-})
-
-
-//////////////// POST APIs
-
-// Api per inserimento nel JSON cronologia_alimentazione
-/**
- * @swagger
- * /api/cronologia_alimentazione/{name}/{quantity}:
- *   post:
- *     summary: Insert the given food into the consummation history.
- *     description: Insert in the consummations history the given food's information after the call to the external DB.
- *     tags:
- *       - Main POST APIs
- *     parameters:
- *       - in: path
- *         name: name
- *         schema:
- *             type: string
- *         required: true
- *         description: the food's name.
- *       - in: path
- *         name: quantity
- *         schema:
- *             type: number
- *             format: float
- *         required: true
- *         description: the quantity consummed.
- *     responses:
- *       201:
- *         description: The given food's information.
- *       419:   
- *         description: Unexpected token
- *         content:
- *           text/plain:
- *             schema:
- *               type: string
- *               example: The food you are looking for is not available in the DB.
- */
-app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) => {
-    // chiamiamo l'altra API
-    var valori_nutrizionali = new XMLHttpRequest();
-
-    var stringa = 'http://localhost:5000/api/valori_nutrizionali/' + request.params.nome + '/' + request.params.quantita;
-
-    valori_nutrizionali.open('GET', stringa);
-    valori_nutrizionali.send();
-
-    valori_nutrizionali.onload = function () {
-        if (this.status === 419){
-            response.status(this.status);
-            response.send(this.response);
-        }
-        else {
-            // lettura file json e estrazione dati
-            var data = fs.readFileSync('cronologia_alimentazione.json');
-            var myObject = JSON.parse(data);
-
-            //aggiunta nuovo elemento
-            myObject.push(JSON.parse(this.response));
-
-            //aggiornamento file json con il nuovo elemento
-            var newData = JSON.stringify(myObject);
-            fs.writeFile('cronologia_alimentazione.json', newData, err => {
-                // error checking
-                if (err) throw err;
-
-            });
-
-            response.json("Prodotto Aggiunto Correttamente: (" + myObject.length + ")");
-        }
+        database.collection("Food").findOne({ nome: alimento }, function (err, result) {
+            if (err) throw err;
+            if (result == null) {
+                response.status(404);
+                response.send("The food you are looking for is not available in the DB.");
+            }
+            else {
+                result["energia"] = Math.round(result["energia"] * quantità * 1000) / 1000;
+                result["grassi"] = Math.round(result["grassi"] * quantità * 1000) / 1000;
+                result["carboidrati"] = Math.round(result["carboidrati"] * quantità * 1000) / 1000;
+                result["proteine"] = Math.round(result["proteine"] * quantità * 1000) / 1000;
+                result["fibre"] = Math.round(result["fibre"] * quantità * 1000) / 1000;
+                result["ferro"] = Math.round(result["ferro"] * quantità * 1000) / 1000;
+                result["iodio"] = Math.round(result["iodio"] * quantità * 1000) / 1000;
+                result["magnesio"] = Math.round(result["magnesio"] * quantità * 1000) / 1000;
+                result["data"] = today;
+                result["quantita"] = parseFloat(request.params.quantita);
+                response.send(result);
+            }
+        });
+    } catch (e) {
+        response.status(400);
+        response.send("The quantity entered is invalid, either negative or not a number.");
     }
+
 })
-
-
-// Api per inserimento nel JSON cronologia_allenamento
-// l'inserimento della data deve essere automatico, non manuale
-/**
- * @swagger
- * /api/cronologia_allenamento:
- *   post:
- *     summary: Insert the given activity into the workouts history.
- *     description: Insert the given activity into the workouts history
- *     tags:
- *       - Main POST APIs
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               nome:
- *                 type: string
- *                 description: The activity's name.
- *                 example: Salti
- *               tempo:
- *                 type: integer
- *                 description: The training time.
- *                 example: 85
- *               energia_bruciata:
- *                 type: number
- *                 format: float
- *                 description: The energy burnt [kcal].
- *                 example: 654.1
- *     responses:
- *       201:
- *         description: successful executed
-*/
-app.post('/api/cronologia_allenamento', (request, response) => {
-
-    // lettura file json e estrazione dati
-    var data = fs.readFileSync('cronologia_allenamento.json');
-    var myObject = JSON.parse(data);
-
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-    var time = today.getHours() + "." + today.getMinutes();
-    today = dd + '_' + mm + '_' + yyyy + ':' + time;
-
-    // creazione nuovo elemento da inserire da Request Parameter
-    let nuovaAttività = {
-        "nome": request.body['nome'],
-        "tempo": request.body['tempo'],
-        "energia_bruciata": request.body['energia_bruciata'],
-        "data": today
-    };
-
-    //aggiunta nuovo elemento
-    myObject.push(nuovaAttività);
-
-    //aggiornamento file json con il nuovo elemento
-    var newData = JSON.stringify(myObject);
-    fs.writeFile('cronologia_allenamento.json', newData, err => {
-        // error checking
-        if (err) throw err;
-
-    });
-
-    response.json("Attività aggiunta correttamente: (" + myObject.length + ")");
-})
-
-
-
-
-//////////////// DELETE APIs
-// [DONE] Api per eliminazione da cronologia_alimentazione
-/**
- * @swagger
- * /api/cronologia_alimentazione/{name}/{date}:
- *   delete:
- *     summary: Delete the given food from the consummation history.
- *     description: Delete the given food from the consummation history.
- *     tags:
- *       - Main DELETE APIs
- *     parameters:
- *       - in: path
- *         name: name
- *         schema:
- *             type: string
- *         required: true
- *         description: the food's name.
- *       - in: path
- *         name: date
- *         schema:
- *             type: string
- *         required: true
- *         description: the date of consummation [dd_mm_yyyy:hh.mm].
- *     responses:
- *       201:
- *         description: the food was deleted.
- */
-app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
-    var data = fs.readFileSync('cronologia_alimentazione.json');
-    var myObject = JSON.parse(data);
-
-    for (let [i] of myObject.entries()) {
-        if (myObject[i].nome === request.params.nome && myObject[i].data === request.params.data) {
-            myObject.splice(i, 1);
-        }
-    }
-    //memorizzo il nuovo JSON dopo la cancellazione
-    var newData = JSON.stringify(myObject);
-    fs.writeFile('cronologia_alimentazione.json', newData, err => {
-        // error checking
-        if (err) throw err;
-    });
-    response.json("Deleted Successfully: " + myObject.length);
-})
-
-// [DONE] Api per eliminazione da cronologia_allenamento
-/**
- * @swagger
- * /api/cronologia_allenamento/{name}/{date}:
- *   delete:
- *     summary: Delete the given activity from the workouts history.
- *     description: Delete the given activity from the workouts history.
- *     tags:
- *       - Main DELETE APIs
- *     parameters:
- *       - in: path
- *         name: name
- *         schema:
- *             type: string
- *         required: true
- *         description: the activity's name.
- *       - in: path
- *         name: date
- *         schema:
- *             type: string
- *         required: true
- *         description: the workout date [dd_mm_yyyy:hh.mm].
- *     responses:
- *       201:
- *         description: the activity was deleted.
- */
-app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
-    var data = fs.readFileSync('cronologia_allenamento.json');
-    var myObject = JSON.parse(data);
-
-    for (let [i] of myObject.entries()) {
-
-        if (myObject[i].nome == request.params.nome && myObject[i].data == request.params.data) {
-            myObject.splice(i, 1);
-        }
-    }
-    //memorizzo il nuovo JSON dopo la cancellazione
-    var newData = JSON.stringify(myObject);
-    fs.writeFile('cronologia_allenamento.json', newData, err => {
-        // error checking
-        if (err) throw err;
-    });
-    response.json("Deleted Successfully: " + myObject.length);
-})
-
-
-
-//////////////// UTILITY GET APIs
 
 // Api per calorie assunte
 /**
@@ -802,7 +867,7 @@ app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
  *                description: The daily intake [kcal].
  *                example: 432
  */
- app.get('/api/calorie_assunte', (request, response) => {
+app.get('/api/calorie_assunte', (request, response) => {
     var data = fs.readFileSync('cronologia_alimentazione.json');
 
     var today = new Date();
