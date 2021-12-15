@@ -430,6 +430,7 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
  *         name: nome
  *         schema:
  *             type: string
+ *             example: Pera
  *         required: true
  *         description: Il nome della piatanza.
  *       - in: path
@@ -437,8 +438,9 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
  *         schema:
  *             type: number
  *             format: float
+ *             example: 180.5
  *         required: true
- *         description: La quantità consumata.
+ *         description: La quantità consumata [g].
  *     responses:
  *       201:
  *         description: Conferma dell'inserimento della pietanza fornita dall'utente nella cronologia.
@@ -581,12 +583,14 @@ app.post('/api/cronologia_allenamento', (request, response) => {
  *         name: nome
  *         schema:
  *             type: string
+ *             example: Mela
  *         required: true
  *         description: Il nome della pietanza.
  *       - in: path
  *         name: data
  *         schema:
  *             type: string
+ *             example: 12_12_2021:12.19
  *         required: true
  *         description: La data di consumazione dd_mm_yyyy:hh.mm .
  *     responses:
@@ -652,12 +656,14 @@ app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
  *         name: nome
  *         schema:
  *             type: string
+ *             example: Corsa
  *         required: true
  *         description: Il nome dell'attività.
  *       - in: path
  *         name: data
  *         schema:
  *             type: string
+ *             example: 13_12_2021:19.6
  *         required: true
  *         description: La data di svolgimento dd_mm_yyyy:hh.mm .
  *     responses:
@@ -727,6 +733,7 @@ app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
  *         name: nome
  *         schema:
  *             type: string
+ *             example: Banana
  *         required: true
  *         description: Il nome della pietanza.
  *       - in: path
@@ -734,6 +741,7 @@ app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
  *         schema:
  *             type: number
  *             format: float
+ *             example: 130.12
  *         required: true
  *         description: La quantità consumata.
  *     responses:
