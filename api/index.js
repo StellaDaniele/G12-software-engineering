@@ -1,18 +1,17 @@
-//////////////// CONSTANTS
 const express = require('express');
 const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
 const fs = require('fs');
-// [TO-DO] Add swaggerOptions
 
 // MongoDB
 const mongodb = require('mongodb').MongoClient;
 const { type } = require('os');
-//const { request, response } = require("express");
-const CONNECTION_STRING = "mongodb+srv://G12:1aRI17qvJk67R@g12-nutritionfacts.sxr24.mongodb.net/test";
 const DATABASE = "Food";
 let database;
+
+///////// The CONNECTION_STIRNG is given in the document, the password will be changed as soon as the results will be published.
+const CONNECTION_STRING = "mongodb+srv://G12:1aRI17qvJk67R@g12-nutritionfacts.sxr24.mongodb.net/test";
 
 // XML
 var XMLHttpRequest = require('xhr2');
@@ -25,16 +24,16 @@ const swaggerOptions = {
     swaggerDefinition: {
         openapi: '3.0.0',
         info: {
-            title: 'Express API for My Project',
+            title: 'Documentazione API sviluppate SmartFit gruppo G12',
             version: '1.0.0',
             description:
-                'This is a REST API application made with Express.',
+                "Questa è un'applicazione REST API sviluppata con Express.",
             license: {
                 name: 'Licensed Under MIT',
                 url: 'https://spdx.org/licenses/MIT.html',
             },
             contact: {
-                name: 'Group12',
+                name: 'Groupo G12',
                 url: 'http://localhost:5000/',
             },
         },
@@ -62,12 +61,6 @@ var cors = require('cors');
 const e = require('express');
 app.use(cors())
 
-/*app.get('/',(req,res)=>{
-    console.log("HOME PAGE");
-});*/
-
-
-
 
 //////////////// GET APIs
 
@@ -76,13 +69,13 @@ app.use(cors())
  * @swagger
  * /api/datiAllenatore:
  *   get:
- *     summary: Retrieve the information about the trainer.
- *     description: Retrieve the trainer's attributes from the Server.
+ *     summary: Recupera le informazioni riguardanti l'allenatore.
+ *     description: Recupera le informazioni riguardanti l'allenatore dal server, in formato JSON.
  *     tags:
- *       - Main GET APIs
+ *       - GET APIs
  *     responses:
  *       200:
- *         description: The trainer's information.
+ *         description: Le informazioni dell'allenatore.
  *         content:
  *           application/json:
  *             schema:
@@ -90,19 +83,19 @@ app.use(cors())
  *               properties:
  *                 nome:
  *                    type: string
- *                    description: The trainer's name.
+ *                    description: Il nome dell'allenatore.
  *                    example: Marco
  *                 cognome:
  *                    type: string
- *                    description: The trainer's last name.
+ *                    description: Il cognome dell'allenatore.
  *                    example: Matteazzi
  *                 eta:
  *                    type: integer
- *                    description: The trainer's age.
+ *                    description: L'età dell'allenatore.
  *                    example: 36
  *                 certificazione:
  *                    type: string
- *                    description: The triner's certification.
+ *                    description: La certificazione dell'allenatore.
  *                    example: FIPE     
  */
 app.get('/api/datiAllenatore', (request, response) => {
@@ -117,13 +110,13 @@ app.get('/api/datiAllenatore', (request, response) => {
  * @swagger
  * /api/cronologia_alimentazione:
  *   get:
- *     summary: Retrieve the consummations history.
- *     description: Retrieve a list of foods, which is the consummations history, from the Server.
+ *     summary: Recupera la cronologia della dieta dell'utente.
+ *     description: Recupera la cronologia delle consumazioni, ovvero la lista dei pasti assunti dall'utente, dal server.
  *     tags:
- *       - Main GET APIs
+ *       - GET APIs
  *     responses:
  *       200:
- *         description: A list of foods.
+ *         description: Una lista di pietanze. L'energia fornita è in kcal, i macro-nutrienti sono in grammi (standard) e i micro-nutrienti sono in milligrammi (standard).
  *         content:
  *           application/json:
  *             schema:
@@ -136,56 +129,56 @@ app.get('/api/datiAllenatore', (request, response) => {
  *                     properties:
  *                       nome:
  *                         type: string
- *                         description: The food's name.
+ *                         description: Il nome della pietanza.
  *                         example: Banana
  *                       energia:
  *                         type: number
  *                         format: float
- *                         description: The food's energy [kcal].
+ *                         description: L'energia assunta con la consumazione della pietanza [kcal].
  *                         example: 78.072
  *                       grassi:
  *                         type: number
  *                         format: float
- *                         description: The food's fats.
+ *                         description: I grassi contenuti.
  *                         example: 0.13
  *                       carboidrati:
  *                         type: number
  *                         format: float
- *                         description: The food's carbs.
+ *                         description: I carboidrati contenuti.
  *                         example: 26.024
  *                       proteine:
  *                         type: number
  *                         format: float
- *                         description: The food's proteins.
+ *                         description: Le proteine contenute.
  *                         example: 1.04
  *                       fibre:
  *                         type: number
  *                         format: float
- *                         description: The food's fibers.
+ *                         description: Le fibre contenute.
  *                         example: 13.012
  *                       ferro:
  *                         type: number
  *                         format: float
- *                         description: The food's iron.
+ *                         description: Il ferro contenuto.
  *                         example: 1.17
  *                       iodio:
  *                         type: number
  *                         format: float
- *                         description: The food's iodine.
+ *                         description: Lo iodio contenuto.
  *                         example: 0.013
  *                       magnesio:
  *                         type: number
  *                         format: float
- *                         description: The food's magnesium.
+ *                         description: Il magnesio contenuto.
  *                         example: 1.171
  *                       data:
  *                          type: string
- *                          description: The food's consummation date.
+ *                          description: La data di consumazione.
  *                          example: 12_12_2021:21.43
  *                       quantita:
  *                          type: number
  *                          format: float
- *                          description: The food's quantity consummed.
+ *                          description: La quantità consumata.
  *                          example: 130.12
  */
 app.get('/api/cronologia_alimentazione', (request, response) => {
@@ -203,13 +196,13 @@ app.get('/api/cronologia_alimentazione', (request, response) => {
  * @swagger
  * /api/cronologia_allenamento:
  *   get:
- *     summary: Retrieve the workouts history.
- *     description: Retrieve a list of activities, which is the workouts history, from the Server.
+ *     summary: Recupera la cronologia dell'allenamento dell'utente.
+ *     description: Recupera la cronologia dell'allenamento, ovvero la lista di attività svolte dall'utente, dal server.
  *     tags:
- *       - Main GET APIs
+ *       - GET APIs
  *     responses:
  *       200:
- *         description: A list of activities.
+ *         description: Una lista di attività. L'energia bruciata è espressa in kcal, il tempo in minuti.
  *         content:
  *           application/json:
  *             schema:
@@ -222,20 +215,20 @@ app.get('/api/cronologia_alimentazione', (request, response) => {
  *                     properties:
  *                       nome:
  *                         type: string
- *                         description: The activity's name.
+ *                         description: Il nome dell'attività.
  *                         example: Salti
  *                       tempo:
  *                         type: integer
- *                         description: The training time.
+ *                         description: La durata dell'attività svolta.
  *                         example: 85
  *                       energia_bruciata:
  *                         type: number
  *                         format: float
- *                         description: The energy burnt [kcal].
+ *                         description: L'energia bruciata [kcal].
  *                         example: 654.1
  *                       data:
  *                          type: string
- *                          description: The workout date.
+ *                          description: La data di svolgimento.
  *                          example: 12_12_2021:16.44
  */
 app.get('/api/cronologia_allenamento', (request, response) => {
@@ -252,13 +245,13 @@ app.get('/api/cronologia_allenamento', (request, response) => {
  * @swagger
  * /api/riepilogo_allenamento:
  *   get:
- *     summary: Retrieve the daily workout summary.
- *     description: Retrieve a list of activities, which is the daily workout summary, from the Server.
+ *     summary: Recupera il riepilogo giornaliero dell'allenamento dell'utente.
+ *     description: Recupera una lista di attività, che sono quelle svolte nella giornata corrente dall'utente, dal server.
  *     tags:
- *       - Main GET APIs
+ *       - GET APIs
  *     responses:
  *       200:
- *         description: A list of activities.
+ *         description: Una lista di attività. L'energia bruciata è espressa in kcal, il tempo in minuti.
  *         content:
  *           application/json:
  *             schema:
@@ -271,20 +264,20 @@ app.get('/api/cronologia_allenamento', (request, response) => {
  *                     properties:
  *                       nome:
  *                         type: string
- *                         description: The activity's name.
+ *                         description: Il nome dell'attività.
  *                         example: Salti
  *                       tempo:
  *                         type: integer
- *                         description: The training time.
+ *                         description: La durata dell'attività svolta.
  *                         example: 85
  *                       energia_bruciata:
  *                         type: number
  *                         format: float
- *                         description: The energy burnt [kcal].
+ *                         description: L'energia bruciata [kcal].
  *                         example: 654.1
  *                       data:
  *                          type: string
- *                          description: The workout date.
+ *                          description: La data di svolgimento.
  *                          example: 12_12_2021:16.44
  */
 app.get('/api/riepilogo_allenamento', (request, response) => {
@@ -320,13 +313,13 @@ app.get('/api/riepilogo_allenamento', (request, response) => {
  * @swagger
  * /api/riepilogo_alimentazione:
  *   get:
- *     summary: Retrieve the daily consummations summary.
- *     description: Retrieve a list of foods, which is the daily consummations summary, from the Server.
+ *     summary: Recupera il riepilogo giornaliero della dieta dell'utente.
+ *     description: Recupera una lista di pietanze, che sono quelle consumate dall'utente nella giornata corrente, dal server.
  *     tags:
- *       - Main GET APIs
+ *       - GET APIs
  *     responses:
  *       200:
- *         description: A list of foods.
+ *         description: Una lista di pietanze. L'energia fornita è in kcal, i macro-nutrienti sono in grammi (standard) e i micro-nutrienti sono in milligrammi (standard).
  *         content:
  *           application/json:
  *             schema:
@@ -339,56 +332,56 @@ app.get('/api/riepilogo_allenamento', (request, response) => {
  *                     properties:
  *                       nome:
  *                         type: string
- *                         description: The food's name.
+ *                         description: Il nome della pietanza.
  *                         example: Banana
  *                       energia:
  *                         type: number
  *                         format: float
- *                         description: The food's energy [kcal].
+ *                         description: L'energia assunta con la consumazione della pietanza [kcal].
  *                         example: 78.072
  *                       grassi:
  *                         type: number
  *                         format: float
- *                         description: The food's fats.
+ *                         description: I grassi contenuti.
  *                         example: 0.13
  *                       carboidrati:
  *                         type: number
  *                         format: float
- *                         description: The food's carbs.
+ *                         description: I carboidrati contenuti.
  *                         example: 26.024
  *                       proteine:
  *                         type: number
  *                         format: float
- *                         description: The food's proteins.
+ *                         description: Le proteine contenute.
  *                         example: 1.04
  *                       fibre:
  *                         type: number
  *                         format: float
- *                         description: The food's fibers.
+ *                         description: Le fibre contenute.
  *                         example: 13.012
  *                       ferro:
  *                         type: number
  *                         format: float
- *                         description: The food's iron.
+ *                         description: Il ferro contenuto.
  *                         example: 1.17
  *                       iodio:
  *                         type: number
  *                         format: float
- *                         description: The food's iodine.
+ *                         description: Lo iodio contenuto.
  *                         example: 0.013
  *                       magnesio:
  *                         type: number
  *                         format: float
- *                         description: The food's magnesium.
+ *                         description: Il magnesio contenuto.
  *                         example: 1.171
  *                       data:
  *                          type: string
- *                          description: The food's consummation date.
+ *                          description: La data di consumazione.
  *                          example: 12_12_2021:21.43
  *                       quantita:
  *                          type: number
  *                          format: float
- *                          description: The food's quantity consummed.
+ *                          description: La quantità consumata.
  *                          example: 130.12
  */
 app.get('/api/riepilogo_alimentazione', (request, response) => {
@@ -426,33 +419,33 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
 // Api per inserimento nel JSON cronologia_alimentazione
 /**
  * @swagger
- * /api/cronologia_alimentazione/{name}/{quantity}:
+ * /api/cronologia_alimentazione/{nome}/{quantità}:
  *   post:
- *     summary: Insert the given food into the consummation history.
- *     description: Insert in the consummations history the given food's information after the call to the external DB.
+ *     summary: Inserisce la pietanza fornita nella cronologia della dieta dell'utente.
+ *     description: Inserisce la pietanza fornita nella cronologia della dieta dell'utente, dopo aver chiamato un'altra API che si occupa di contattare un server esterno per calcolare, in base alla quantità consumata, i valori nutritivi assunti.  Non viene richiesto di inserire la data di svolgimento perché prende in automatico dal sistema.
  *     tags:
- *       - Main POST APIs
+ *       - POST APIs
  *     parameters:
  *       - in: path
- *         name: name
+ *         name: nome
  *         schema:
  *             type: string
  *         required: true
- *         description: the food's name.
+ *         description: Il nome della piatanza.
  *       - in: path
- *         name: quantity
+ *         name: quantità
  *         schema:
  *             type: number
  *             format: float
  *         required: true
- *         description: the quantity consummed.
+ *         description: La quantità consumata.
  *     responses:
  *       201:
- *         description: The given food's information.
+ *         description: Conferma dell'inserimento della pietanza fornita dall'utente nella cronologia.
  *       400:   
- *         description: Bad request, the quantity entered was either negative or not a number.
+ *         description: "Bad request: la quantità inserita non era un numero oppure era negativa o nulla."
  *       404:   
- *         description: The food searched is not available in the database.
+ *         description: La pietanza ricercata non è presente nel database.
  */
 app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) => {
     // chiamiamo l'altra API
@@ -491,15 +484,14 @@ app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) =>
 
 
 // Api per inserimento nel JSON cronologia_allenamento
-// l'inserimento della data deve essere automatico, non manuale
 /**
  * @swagger
  * /api/cronologia_allenamento:
  *   post:
- *     summary: Insert the given activity into the workouts history.
- *     description: Insert the given activity into the workouts history
+ *     summary: Inserisce l'attività fornita nella cronologia dell'allenamento dell'utente.
+ *     description: Inserisce l'attività fornita nella cronologia dell'allenamento dell'utente. È stato deciso di richiedere un JSON in questa API POST al posto di parametri in ingresso perché si è assunto che fosse più facile poi da gestire utilizzandola con dispositivi smart come era descritto nelle specifiche del progetto. Non viene richiesto di inserire la data di svolgimento perché prende in automatico dal sistema.
  *     tags:
- *       - Main POST APIs
+ *       - POST APIs
  *     requestBody:
  *       required: true
  *       content:
@@ -509,22 +501,22 @@ app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) =>
  *             properties:
  *               nome:
  *                 type: string
- *                 description: The activity's name.
+ *                 description: Il nome dell'attività.
  *                 example: Salti
  *               tempo:
  *                 type: integer
- *                 description: The training time.
+ *                 description: La durata dell'attività svolta.
  *                 example: 85
  *               energia_bruciata:
  *                 type: number
  *                 format: float
- *                 description: The energy burnt [kcal].
+ *                 description: L'energia bruciata [kcal].
  *                 example: 654.1
  *     responses:
  *       201:
- *         description: successful executed
+ *         description: Conferma inserimento dell'attività fornita dall'utente nella cronologia.
  *       400:   
- *         description: The JSON entered was malformed or the content didn't satisfy the requirements (a negative or NaN time, energy, ...)
+ *         description: "Il JSON inserito è malformato o il contenuto non soddisfa i requisiti richiesti. I requisiti sono i controlli sull'input, soprattutto per energia e tempo: non devono essere negativi, nulli, NaN, ecc."
 */
 app.post('/api/cronologia_allenamento', (request, response) => {
 
@@ -539,7 +531,7 @@ app.post('/api/cronologia_allenamento', (request, response) => {
         var yyyy = today.getFullYear();
         var time = today.getHours() + "." + today.getMinutes();
         today = dd + '_' + mm + '_' + yyyy + ':' + time;
-
+        
         // creazione nuovo elemento da inserire da Request Parameter
         if (request.body['nome'] == null || isNaN(parseInt(request.body['tempo']))
             || parseInt(request.body['tempo']) <= 0
@@ -578,32 +570,32 @@ app.post('/api/cronologia_allenamento', (request, response) => {
 // [DONE] Api per eliminazione da cronologia_alimentazione
 /**
  * @swagger
- * /api/cronologia_alimentazione/{name}/{date}:
+ * /api/cronologia_alimentazione/{nome}/{data}:
  *   delete:
- *     summary: Delete the given food from the consummation history.
- *     description: Delete the given food from the consummation history.
+ *     summary: Elimina la consumazione fornita dalla cronologia della dieta dell'utente.
+ *     description: Elimina la consumazione fornita dalla cronologia della dieta dell'utente. La data deve essere del formato [dd_mm_yyyy:hh.mm]. Si faccia attenzione che l'orario è in formato 24h e che per ore e minuti non ci va lo zero davanti quando minori di dieci, ad esempio 09.03 va scritto 9.3.
  *     tags:
- *       - Main DELETE APIs
+ *       - DELETE APIs
  *     parameters:
  *       - in: path
- *         name: name
+ *         name: nome
  *         schema:
  *             type: string
  *         required: true
- *         description: the food's name.
+ *         description: Il nome della pietanza.
  *       - in: path
- *         name: date
+ *         name: data
  *         schema:
  *             type: string
  *         required: true
- *         description: the date of consummation [dd_mm_yyyy:hh.mm].
+ *         description: La data di consumazione dd_mm_yyyy:hh.mm .
  *     responses:
  *       201:
- *         description: the food was deleted.
+ *         description: Conferma eliminazione della consumazione fornita dall'utente dalla cronologia.
  *       304:
- *         description: Nothing has been deleted, the data you want to delete is not in the consummation history.
+ *         description: Nessuna eliminazione effettuata, la consumazione cercata non è stata trovata nella cronologia.
  *       400:
- *         description: The date entered doesn't satisfy the requirements.
+ *         description: I dati forniti non rispettano i requisiti. Si controlli che la data inserita soddisfi i requisiti richiesti (formato sopracitato).
  */
 app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
     var data = fs.readFileSync('cronologia_alimentazione.json');
@@ -649,32 +641,32 @@ app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
 // [DONE] Api per eliminazione da cronologia_allenamento
 /**
  * @swagger
- * /api/cronologia_allenamento/{name}/{date}:
+ * /api/cronologia_allenamento/{nome}/{data}:
  *   delete:
- *     summary: Delete the given activity from the workouts history.
- *     description: Delete the given activity from the workouts history.
+ *     summary: Elimina l'attività fornita dalla cronologia dell'allenamento dell'utente.
+ *     description: Elimina l'attività fornita dalla cronologia dell'allenamento dell'utente. La data deve essere del formato [dd_mm_yyyy:hh.mm]. Si faccia attenzione che l'orario è in formato 24h e che per ore e minuti non ci va lo zero davanti quando minori di dieci, ad esempio 09.03 va scritto 9.3.
  *     tags:
- *       - Main DELETE APIs
+ *       - DELETE APIs
  *     parameters:
  *       - in: path
- *         name: name
+ *         name: nome
  *         schema:
  *             type: string
  *         required: true
- *         description: the activity's name.
+ *         description: Il nome dell'attività.
  *       - in: path
- *         name: date
+ *         name: data
  *         schema:
  *             type: string
  *         required: true
- *         description: the workout date [dd_mm_yyyy:hh.mm].
+ *         description: La data di svolgimento dd_mm_yyyy:hh.mm .
  *     responses:
  *       201:
- *         description: the activity was deleted.
+ *         description: Conferma eliminazione dell'attività fornita dall'utente dalla cronologia.
  *       304:
- *         description: Nothing has been deleted, the data you want to delete is not in the workouts history.
+ *         description: Nessuna eliminazione effettuata, l'attività cercata non è stata trovata nella cronologia.
  *       400:
- *         description: The date entered doesn't satisfy the requirements.
+ *         description: I dati forniti non rispettano i requisiti. Si controlli che la data inserita soddisfi i requisiti richiesti (formato sopracitato).
  */
 app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
     var data = fs.readFileSync('cronologia_allenamento.json');
@@ -724,91 +716,91 @@ app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
 // [DONE] Api per ricerca nel DB di un alimento
 /**
  * @swagger
- * /api/valori_nutrizionali/{name}/{quantity}:
+ * /api/valori_nutrizionali/{nome}/{quantità}:
  *   get:
- *     summary: Retrieve the information about a given food.
- *     description: Retrieve the given food's information from the external DB.
+ *     summary: Recupera le informazioni nutrizionali di un alimento fornito.
+ *     description: Recupera le informazioni nutrizionali di un alimento fornito contattando un server esterno. Riscala i valori in base alla quantità consumata dall'utente.
  *     tags:
  *       - Utility APIs
  *     parameters:
  *       - in: path
- *         name: name
+ *         name: nome
  *         schema:
  *             type: string
  *         required: true
- *         description: the food's name.
+ *         description: Il nome della pietanza.
  *       - in: path
- *         name: quantity
+ *         name: quantità
  *         schema:
  *             type: number
  *             format: float
  *         required: true
- *         description: the quantity consummed.
+ *         description: La quantità consumata.
  *     responses:
  *       200:
- *         description: The given food's information.
+ *         description: Le informazioni nutrizionali della pietanza inserita, in base alla quantità consumata.
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
  *                 nome:
- *                    type: string
- *                    description: The food's name.
- *                    example: Banana
+ *                   type: string
+ *                   description: Il nome della pietanza.
+ *                   example: Banana
  *                 energia:
- *                    type: number
- *                    format: float
- *                    description: The food's energy [kcal].
- *                    example: 78.072
+ *                   type: number
+ *                   format: float
+ *                   description: L'energia assunta con la consumazione della pietanza [kcal].
+ *                   example: 78.072
  *                 grassi:
- *                    type: number
- *                    format: float
- *                    description: The food's fats.
- *                    example: 0.13
+ *                   type: number
+ *                   format: float
+ *                   description: I grassi contenuti.
+ *                   example: 0.13
  *                 carboidrati:
- *                    type: number
- *                    format: float
- *                    description: The food's carbs.
- *                    example: 26.024
+ *                   type: number
+ *                   format: float
+ *                   description: I carboidrati contenuti.
+ *                   example: 26.024
  *                 proteine:
- *                    type: number
- *                    format: float
- *                    description: The food's proteins.
- *                    example: 1.04
+ *                   type: number
+ *                   format: float
+ *                   description: Le proteine contenute.
+ *                   example: 1.04
  *                 fibre:
- *                    type: number
- *                    format: float
- *                    description: The food's fibers.
- *                    example: 13.012
+ *                   type: number
+ *                   format: float
+ *                   description: Le fibre contenute.
+ *                   example: 13.012
  *                 ferro:
- *                    type: number
- *                    format: float
- *                    description: The food's iron.
- *                    example: 1.17
+ *                   type: number
+ *                   format: float
+ *                   description: Il ferro contenuto.
+ *                   example: 1.17
  *                 iodio:
- *                    type: number
- *                    format: float
- *                    description: The food's iodine.
- *                    example: 0.013
+ *                   type: number
+ *                   format: float
+ *                   description: Lo iodio contenuto.
+ *                   example: 0.013
  *                 magnesio:
- *                    type: number
- *                    format: float
- *                    description: The food's magnesium.
- *                    example: 1.171
+ *                   type: number
+ *                   format: float
+ *                   description: Il magnesio contenuto.
+ *                   example: 1.171
  *                 data:
- *                    type: string
- *                    description: The food's consummation date.
- *                    example: 12_12_2021:21.43
+ *                   type: string
+ *                   description: La data di consumazione.
+ *                   example: 12_12_2021:21.43
  *                 quantita:
- *                    type: number
- *                    format: float
- *                    description: The food's quantity consummed.
- *                    example: 130.12
+ *                   type: number
+ *                   format: float
+ *                   description: La quantità consumata.
+ *                   example: 130.12
  *       400:   
- *         description: Bad request, the quantity entered was either negative or not a number.
+ *         description: "Bad request: la quantità inserita non era un numero oppure era negativa o nulla."
  *       404:   
- *         description: The food searched is not available in the database.
+ *         description: La pietanza ricercata non è presente nel database.
  */
 app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
     var alimento = request.params.nome;
@@ -855,20 +847,19 @@ app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
  * @swagger
  * /api/calorie_assunte:
  *   get:
- *     summary: Retrieve the daily energy intake [kcal].
- *     description: Retrieve the daily energy intake [kcal] from the Server.
+ *     summary: Restituisce l'assunzione energetica giornaliera da parte dell'utente in kcal.
+ *     description: Restituisce l'assunzione energetica giornaliera da parte dell'utente in kcal.
  *     tags:
  *       - Utility APIs
  *     responses:
  *       200:
- *         description: The daily energy intake [kcal].
- *         schema:
- *           type: object
- *           properties:
- *             kcal:
- *                type: string
- *                description: The daily intake [kcal].
- *                example: 432
+ *         description: L'assunzione energetica [kcal].
+ *         content:
+ *           schema:
+ *             type: number
+ *             format: float
+ *             description: Energia assunta [kcal].
+ *             example: 780.6
  */
 app.get('/api/calorie_assunte', (request, response) => {
     var data = fs.readFileSync('cronologia_alimentazione.json');
@@ -906,20 +897,19 @@ app.get('/api/calorie_assunte', (request, response) => {
  * @swagger
  * /api/calorie_bruciate:
  *   get:
- *     summary: Retrieve the daily burnt kcal.
- *     description: Retrieve the daily burnt kcal from the Server.
+ *     summary: Restituisce l'energia bruciata dall'utente nella giornata corrente in kcal.
+ *     description: Restituisce l'energia bruciata dall'utente nella giornata corrente in kcal.
  *     tags:
  *       - Utility APIs
  *     responses:
  *       200:
- *         description: The daily burnt kcal.
- *         schema:
- *           type: object
- *           properties:
- *             kcal:
- *                type: string
- *                description: The kcal burnt.
- *                example: 432
+ *         description: Viene restituito il numero di kcal bruciate.
+ *         content:
+ *           schema:
+ *             type: number
+ *             format: float
+ *             description: Energia bruciata [kcal].
+ *             example: 350.1
  */
 app.get('/api/calorie_bruciate', (request, response) => {
     var data = fs.readFileSync('cronologia_allenamento.json');
