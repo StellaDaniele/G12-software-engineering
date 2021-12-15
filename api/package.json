@@ -4,7 +4,8 @@
   "description": "API of my Project",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "node test | tap-spec"
   },
   "author": "G12",
   "license": "MIT",
@@ -16,5 +17,10 @@
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.2.0",
     "xhr2": "^0.2.1"
+  },
+  "devDependencies": {
+    "supertest": "^6.1.6",
+    "tap-spec": "^5.0.0",
+    "tape": "^5.3.2"
   }
 }

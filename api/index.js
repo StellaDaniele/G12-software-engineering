@@ -541,7 +541,10 @@ app.post('/api/cronologia_allenamento', (request, response) => {
         today = dd + '_' + mm + '_' + yyyy + ':' + time;
 
         // creazione nuovo elemento da inserire da Request Parameter
-        if (request.body['nome'] == null || isNaN(parseInt(request.body['tempo'])) || parseInt(request.body['tempo']) <= 0 || isNaN(parseInt(request.body['energia_bruciata'])) || parseFloat(request.body['energia_bruciata']) <= 0.0)
+        if (request.body['nome'] == null || isNaN(parseInt(request.body['tempo']))
+            || parseInt(request.body['tempo']) <= 0
+            || isNaN(parseInt(request.body['energia_bruciata']))
+            || parseFloat(request.body['energia_bruciata']) <= 0.0)
             throw e;
         let nuovaAttività = {
             "nome": request.body['nome'],
@@ -807,7 +810,7 @@ app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
  *       404:   
  *         description: The food searched is not available in the database.
  */
- app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
+app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
     var alimento = request.params.nome;
 
     try {
@@ -949,7 +952,7 @@ app.get('/api/calorie_bruciate', (request, response) => {
 
 
 
-
+/*
 app.listen(5000, () => {
     console.log("APIs Running");
     mongodb.connect(CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
@@ -962,4 +965,6 @@ app.listen(5000, () => {
         }
     })
 
-})
+})*/
+
+module.exports = app;
