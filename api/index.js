@@ -952,19 +952,20 @@ app.get('/api/calorie_bruciate', (request, response) => {
 
 
 
-/*
+
 app.listen(5000, () => {
-    console.log("APIs Running");
+    console.log("Running on localhost:5000/");
+    console.log("APIs Documentation on localhost:5000/api-docs");
     mongodb.connect(CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true }, (error, client) => {
         if (error) {
-            console.log("Errore: " + error);
+            console.log("An error has occurred trying to connect to the DB: " + error);
         }
         else {
             database = client.db(DATABASE);
-            console.log("DB Connected");
+            console.log("DB Connected successfully.");
         }
     })
 
-})*/
+})
 
 module.exports = app;
