@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "supertest": "^6.1.6",
-    "tap-spec": "^5.0.0",
+    "tap-spec": "^2.2.2",
     "tape": "^5.3.2"
   }
 }
