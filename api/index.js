@@ -676,14 +676,13 @@ app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
  *         description: I dati forniti non rispettano i requisiti. Si controlli che la data inserita soddisfi i requisiti richiesti (formato sopracitato).
  */
 app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
-    var data = fs.readFileSync('cronologia_allenamento.json');
-    var myObject = JSON.parse(data);
-
     if (request.params.data.length < 14) {
         response.status(400);
         response.send("La data inserita non soddisfa i requisiti richiesti.");
     }
     else {
+        var data = fs.readFileSync('cronologia_allenamento.json');
+        var myObject = JSON.parse(data);
         var contenuti_prima = 0;
         for (let [i] of myObject.entries()) {
             contenuti_prima++;

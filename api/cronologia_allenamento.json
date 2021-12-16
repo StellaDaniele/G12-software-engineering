@@ -1,1 +1,38 @@
-[{"nome":"Corsa","tempo":30,"energia_bruciata":102.1,"data":"25_10_2021:17.44"},{"nome":"Salti","tempo":85,"energia_bruciata":654.1,"data":"12_12_2021:15.44"},{"nome":"Corda","tempo":65,"energia_bruciata":65.1,"data":"12_12_2021:16.44"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:13.25"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:13.26"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:14.14"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:14.16"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:14.20"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:14.24"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:14.25"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:14.29"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:14.29"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:14.29"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:14.31"},{"nome":"Trazioni","tempo":20,"energia_bruciata":400.2,"data":"16_12_2021:14.37"}]
+[
+    {
+        "nome": "Corsa",
+        "tempo": 30,
+        "energia_bruciata": 102.1,
+        "data": "25_10_2021:17.44"
+    },
+    {
+        "nome": "Salti",
+        "tempo": 85,
+        "energia_bruciata": 654.1,
+        "data": "12_12_2021:15.44"
+    },
+    {
+        "nome": "Corda",
+        "tempo": 65,
+        "energia_bruciata": 65.1,
+        "data": "12_12_2021:16.44"
+    },
+    {
+        "nome": "Trazioni",
+        "tempo": 20,
+        "energia_bruciata": 400.2,
+        "data": "16_12_2021:13.25"
+    },
+    {
+        "nome": "Trazioni",
+        "tempo": 20,
+        "energia_bruciata": 400.2,
+        "data": "16_12_2021:13.26"
+    },
+    {
+        "nome": "Trazioni",
+        "tempo": 20,
+        "energia_bruciata": 400.2,
+        "data": "16_12_2021:14.14"
+    }
+]
