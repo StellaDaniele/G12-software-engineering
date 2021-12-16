@@ -182,7 +182,7 @@ app.get('/api/datiAllenatore', (request, response) => {
  *                          example: 130.12
  */
 app.get('/api/cronologia_alimentazione', (request, response) => {
-    var data = fs.readFileSync('cronologia_alimentazione.json');
+    var data = fs.readFileSync('../cronologie/cronologia_alimentazione.json');
     var myObject = JSON.parse(data);
 
     response.send(myObject);
@@ -232,7 +232,7 @@ app.get('/api/cronologia_alimentazione', (request, response) => {
  *                          example: 12_12_2021:16.44
  */
 app.get('/api/cronologia_allenamento', (request, response) => {
-    var data = fs.readFileSync('cronologia_allenamento.json');
+    var data = fs.readFileSync('../cronologie/cronologia_allenamento.json');
     var myObject = JSON.parse(data);
 
     response.send(myObject);
@@ -281,7 +281,7 @@ app.get('/api/cronologia_allenamento', (request, response) => {
  *                          example: 12_12_2021:16.44
  */
 app.get('/api/riepilogo_allenamento', (request, response) => {
-    var data = fs.readFileSync('cronologia_allenamento.json');
+    var data = fs.readFileSync('../cronologie/cronologia_allenamento.json');
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -385,7 +385,7 @@ app.get('/api/riepilogo_allenamento', (request, response) => {
  *                          example: 130.12
  */
 app.get('/api/riepilogo_alimentazione', (request, response) => {
-    var data = fs.readFileSync('cronologia_alimentazione.json');
+    var data = fs.readFileSync('../cronologie/cronologia_alimentazione.json');
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -421,8 +421,8 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
  * @swagger
  * /api/cronologia_alimentazione/{nome}/{quantità}:
  *   post:
- *     summary: Inserisce la pietanza fornita nella cronologia della dieta dell'utente.
- *     description: Inserisce la pietanza fornita nella cronologia della dieta dell'utente, dopo aver chiamato un'altra API che si occupa di contattare un server esterno per calcolare, in base alla quantità consumata, i valori nutritivi assunti.  Non viene richiesto di inserire la data di svolgimento perché prende in automatico dal sistema.
+ *     summary: Inserisce la consumazione fornita nella cronologia della dieta dell'utente.
+ *     description: Inserisce la consumazione fornita nella cronologia della dieta dell'utente, dopo aver chiamato un'altra API che si occupa di contattare un server esterno per calcolare, in base alla quantità consumata, i valori nutritivi assunti.  Non viene richiesto di inserire la data di svolgimento perché prende in automatico dal sistema.
  *     tags:
  *       - POST APIs
  *     parameters:
@@ -443,7 +443,7 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
  *         description: La quantità consumata [g].
  *     responses:
  *       201:
- *         description: Conferma dell'inserimento della pietanza fornita dall'utente nella cronologia.
+ *         description: Conferma dell'inserimento della consumazione fornita dall'utente nella cronologia.
  *       400:   
  *         description: "Bad request: la quantità inserita non era un numero oppure era negativa o nulla."
  *       404:   
@@ -465,7 +465,7 @@ app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) =>
         }
         else {
             // lettura file json e estrazione dati
-            var data = fs.readFileSync('cronologia_alimentazione.json');
+            var data = fs.readFileSync('../cronologie/cronologia_alimentazione.json');
             var myObject = JSON.parse(data);
 
             //aggiunta nuovo elemento
@@ -473,7 +473,7 @@ app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) =>
 
             //aggiornamento file json con il nuovo elemento
             var newData = JSON.stringify(myObject);
-            fs.writeFile('cronologia_alimentazione.json', newData, err => {
+            fs.writeFile('../cronologie/cronologia_alimentazione.json', newData, err => {
                 // error checking
                 if (err) throw err;
 
@@ -523,7 +523,7 @@ app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) =>
 app.post('/api/cronologia_allenamento', (request, response) => {
 
     // lettura file json e estrazione dati
-    var data = fs.readFileSync('cronologia_allenamento.json');
+    var data = fs.readFileSync('../cronologie/cronologia_allenamento.json');
     try {
         var myObject = JSON.parse(data);
 
@@ -552,7 +552,7 @@ app.post('/api/cronologia_allenamento', (request, response) => {
 
         //aggiornamento file json con il nuovo elemento
         var newData = JSON.stringify(myObject);
-        fs.writeFile('cronologia_allenamento.json', newData, err => {
+        fs.writeFile('../cronologie/cronologia_allenamento.json', newData, err => {
             // error checking
             if (err) throw err;
 
@@ -602,7 +602,7 @@ app.post('/api/cronologia_allenamento', (request, response) => {
  *         description: I dati forniti non rispettano i requisiti. Si controlli che la data inserita soddisfi i requisiti richiesti (formato sopracitato).
  */
 app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
-    var data = fs.readFileSync('cronologia_alimentazione.json');
+    var data = fs.readFileSync('../cronologie/cronologia_alimentazione.json');
     var myObject = JSON.parse(data);
 
     if (request.params.data.length < 14) {
@@ -633,7 +633,7 @@ app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
         else {
             //memorizzo il nuovo JSON dopo la cancellazione
             var newData = JSON.stringify(myObject);
-            fs.writeFile('cronologia_alimentazione.json', newData, err => {
+            fs.writeFile('../cronologie/cronologia_alimentazione.json', newData, err => {
                 // error checking
                 if (err) throw err;
             });
@@ -681,7 +681,7 @@ app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
         response.send("La data inserita non soddisfa i requisiti richiesti.");
     }
     else {
-        var data = fs.readFileSync('cronologia_allenamento.json');
+        var data = fs.readFileSync('../cronologie/cronologia_allenamento.json');
         var myObject = JSON.parse(data);
         var contenuti_prima = 0;
         for (let [i] of myObject.entries()) {
@@ -706,7 +706,7 @@ app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
         else {
             //memorizzo il nuovo JSON dopo la cancellazione
             var newData = JSON.stringify(myObject);
-            fs.writeFile('cronologia_allenamento.json', newData, err => {
+            fs.writeFile('../cronologie/cronologia_allenamento.json', newData, err => {
                 // error checking
                 if (err) throw err;
             });
@@ -871,7 +871,7 @@ app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
  *             example: 780.6
  */
 app.get('/api/calorie_assunte', (request, response) => {
-    var data = fs.readFileSync('cronologia_alimentazione.json');
+    var data = fs.readFileSync('../cronologie/cronologia_alimentazione.json');
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -921,7 +921,7 @@ app.get('/api/calorie_assunte', (request, response) => {
  *             example: 350.1
  */
 app.get('/api/calorie_bruciate', (request, response) => {
-    var data = fs.readFileSync('cronologia_allenamento.json');
+    var data = fs.readFileSync('../cronologie/cronologia_allenamento.json');
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
