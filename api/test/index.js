@@ -41,16 +41,22 @@ test('TEST2: Correct activity added', function (assert) {
 });
 
 test('TEST3: Activity deleted correcytly',function(assert){
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    var time = today.getHours() + "." + today.getMinutes();
+    today = dd + '_' + mm + '_' + yyyy + ':' + time;
     request(app)
-        .del('/api/cronologia_allenamento/Trazioni/16_12_2021:14.23')
+        .del('/api/cronologia_allenamento/Trazioni/'+today)
         .expect(200)
         .end(function (err,response){
             if(err){
-                reject(new Error('An error occured with the activity deleting API, err: ' + err));
+                //reject(new Error('An error occured with the activity deleting API, err: ' + err));
             }
             else{
                 assert.error(err, 'No error');
-                assert.isEqual("Deleted Successfully", res.text, "Activity deleted correctly")
+                assert.isEqual("Deleted Successfully", response.body, "Activity deleted correctly")
                 assert.end();
             }
         });
