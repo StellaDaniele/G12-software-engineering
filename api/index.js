@@ -478,8 +478,8 @@ app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) =>
                 if (err) throw err;
 
             });
-
-            response.json("Prodotto Aggiunto Correttamente: (" + myObject.length + ")");
+            response.status(201);
+            response.send("Consumazione aggiunta correttamente alla cronologia.");
         }
     }
 })
@@ -557,11 +557,11 @@ app.post('/api/cronologia_allenamento', (request, response) => {
             if (err) throw err;
 
         });
-
-        response.json("Attività aggiunta correttamente: (" + myObject.length + ")");
+        response.status(201);
+        response.send("Attività aggiunta correttamente alla cronologia.");
     } catch (e) {
         response.status(400);
-        response.send("The JSON entered was malformed or the content didn't satisfy the requirements (a negative or NaN time, energy, ...)");
+        response.send("Il JSON inserito è malformato o il contenuto non soddisfa i requisiti richiesti. I requisiti sono i controlli sull'input, soprattutto per energia e tempo: non devono essere negativi, nulli, NaN, ecc.");
     }
 })
 
@@ -594,7 +594,7 @@ app.post('/api/cronologia_allenamento', (request, response) => {
  *         required: true
  *         description: La data di consumazione dd_mm_yyyy:hh.mm .
  *     responses:
- *       201:
+ *       200:
  *         description: Conferma eliminazione della consumazione fornita dall'utente dalla cronologia.
  *       304:
  *         description: Nessuna eliminazione effettuata, la consumazione cercata non è stata trovata nella cronologia.
@@ -607,7 +607,7 @@ app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
 
     if (request.params.data.length < 14) {
         response.status(400);
-        response.send("The date entered doesn't satisfy the requirements.");
+        response.send("La data inserita non soddisfa i requisiti richiesti.");
     }
     else {
         var contenuti_prima = 0;
@@ -628,7 +628,7 @@ app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
 
         if (contenuti_prima == contenuti_dopo) {
             response.status(304);
-            response.send("Nothing has been deleted, the data you want to delete is not in the consummation history.");
+            response.send("Non è stata apportata alcuna modifica, la consumazione che si vuole eliminare non è presente nella cronologia.");
         }
         else {
             //memorizzo il nuovo JSON dopo la cancellazione
@@ -637,7 +637,8 @@ app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
                 // error checking
                 if (err) throw err;
             });
-            response.json("Deleted Successfully: " + myObject.length);
+            response.status(200);
+            response.send("Consumazione eliminata correttamente dalla cronologia.");
         }
     }
 })
@@ -667,7 +668,7 @@ app.delete('/api/cronologia_alimentazione/:nome/:data', (request, response) => {
  *         required: true
  *         description: La data di svolgimento dd_mm_yyyy:hh.mm .
  *     responses:
- *       201:
+ *       200:
  *         description: Conferma eliminazione dell'attività fornita dall'utente dalla cronologia.
  *       304:
  *         description: Nessuna eliminazione effettuata, l'attività cercata non è stata trovata nella cronologia.
@@ -680,7 +681,7 @@ app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
 
     if (request.params.data.length < 14) {
         response.status(400);
-        response.send("The date entered doesn't satisfy the requirements.");
+        response.send("La data inserita non soddisfa i requisiti richiesti.");
     }
     else {
         var contenuti_prima = 0;
@@ -701,7 +702,7 @@ app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
 
         if (contenuti_prima == contenuti_dopo) {
             response.status(304);
-            response.send("Nothing has been deleted, the data you want to delete is not in the workouts history.");
+            response.send("Non è stata apportata alcuna modifica, l'attività che si vuole eliminare non è presente nella cronologia.");
         }
         else {
             //memorizzo il nuovo JSON dopo la cancellazione
@@ -710,7 +711,8 @@ app.delete('/api/cronologia_allenamento/:nome/:data', (request, response) => {
                 // error checking
                 if (err) throw err;
             });
-            response.json("Deleted Successfully: " + myObject.length);
+            response.status(200);
+            response.send("Attività eliminata correttamente dalla cronologia.");
         }
     }
 })
@@ -827,7 +829,7 @@ app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
             if (err) throw err;
             if (result == null) {
                 response.status(404);
-                response.send("The food you are looking for is not available in the DB.");
+                response.send("La pietanza ricercata non è presente nel database.");
             }
             else {
                 result["energia"] = Math.round(result["energia"] * quantità * 1000) / 1000;
@@ -845,7 +847,7 @@ app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
         });
     } catch (e) {
         response.status(400);
-        response.send("The quantity entered is invalid, either negative or not a number.");
+        response.send("La quantità inserita non è valida, potrebbe essere negativa, nulla, o non essere un numero.");
     }
 
 })
