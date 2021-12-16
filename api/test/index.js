@@ -2,6 +2,7 @@ const fs = require('fs');
 var test = require('tape');
 var request = require('supertest');
 var app = require('..');
+const { response } = require('express');
 //const { rejects } = require('assert');
 
 
@@ -31,10 +32,26 @@ test('TEST2: Correct activity added', function (assert) {
         .expect(201)
         .end(function (err, response) {
             if (err){
-               reject(new Error('An error occured with the employee Adding API, err: ' + err));
+               reject(new Error('An error occured with the acitity adding API, err: ' + err));
             }
             assert.error(err, 'No error');
             assert.isEqual(response.text, "Attività aggiunta correttamente alla cronologia.", "Activity added correctly");
             assert.end();
+        });
+});
+
+test('TEST3: Activity deleted correcytly',function(assert){
+    request(app)
+        .del('/api/cronologia_allenamento/Trazioni/16_12_2021:14.23')
+        .expect(200)
+        .end(function (err,response){
+            if(err){
+                reject(new Error('An error occured with the activity deleting API, err: ' + err));
+            }
+            else{
+                assert.error(err, 'No error');
+                assert.isEqual("Deleted Successfully", res.text, "Activity deleted correctly")
+                assert.end();
+            }
         });
 });
