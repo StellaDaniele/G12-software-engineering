@@ -57,8 +57,8 @@ test('TEST2: Aggiunta attività alla cronologia allenamenti', function (assert) 
         });
 });
 
-test('TEST3: Attività eliminata correttamente dalla cronologia allenamenti', function (assert) {
-    var data = fs.readFileSync('cronologia_allenamento.json');
+test('TEST3: Eliminazione attività dalla cronologia allenamenti', function (assert) {
+    var data = fs.readFileSync('../cronologie/cronologia_allenamento.json');
     var myObject = JSON.parse(data);
     var nome = myObject[myObject.length - 1].nome;
     var data = myObject[myObject.length - 1].data;
@@ -78,7 +78,7 @@ test('TEST3: Attività eliminata correttamente dalla cronologia allenamenti', fu
 });
 
 test('TEST4: Robustezza API eliminazione attività da cronologia allenamento', function (assert) {
-    var data = fs.readFileSync('cronologia_allenamento.json');
+    var data = fs.readFileSync('../cronologie/cronologia_allenamento.json');
     var myObject = JSON.parse(data);
     var nome = myObject[myObject.length - 1].nome;
     var data = myObject[myObject.length - 1].data;
