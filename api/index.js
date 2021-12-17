@@ -397,19 +397,21 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
     var myObject = JSON.parse(data);
     var riepilogo = JSON.parse('[]');
 
-    for (let [i] of myObject.entries()) {
+    for (let i of myObject) {
         var equal = true;
 
+        console.log(i);
+
         for (var j = 0; j < 10 && equal; j++) {
-            equal = (myObject[i].data).toString().charAt(j) == today.charAt(j);
+            equal = (i.data).toString().charAt(j) == today.charAt(j);
         }
 
         if (equal) {
-            riepilogo.push(myObject[i]);
+            riepilogo.push(i);
         }
     }
-
-    response.send(riepilogo);
+    console.log(riepilogo);
+    response.json(riepilogo);
 })
 
 
