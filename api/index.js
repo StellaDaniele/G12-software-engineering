@@ -400,8 +400,6 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
     for (let i of myObject) {
         var equal = true;
 
-        console.log(i);
-
         for (var j = 0; j < 10 && equal; j++) {
             equal = (i.data).toString().charAt(j) == today.charAt(j);
         }
@@ -410,7 +408,6 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
             riepilogo.push(i);
         }
     }
-    console.log(riepilogo);
     response.json(riepilogo);
 })
 

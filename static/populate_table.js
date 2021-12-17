@@ -1,21 +1,17 @@
 function loadAlimentazione() {
-   const app = document.getElementById("tabella_alimentazione");
    const request = new XMLHttpRequest();
 
    request.open('GET', '/api/riepilogo_alimentazione', true);
-   //request.setRequestHeader('Access-Control-Allow-Origin', '/api/riepilogo_alimentazione');
    request.send();
 
    request.onload = function () {
       let data = JSON.parse(this.response);
-      console.log(data);
 
       const tmplt = document.getElementById('row_alimentazione');
       const tabella = document.getElementById('tabella_alimentazione');
 
       if (request.status >= 200 && request.status < 400) {
          data.forEach(meal => {
-            console.log(meal);
             let clone = tmplt.content.cloneNode(true);
 
             let nomeClonato = clone.getElementById('alimento');
@@ -36,12 +32,10 @@ function loadAlenamento() {
    const request = new XMLHttpRequest();
 
    request.open('GET', '/api/riepilogo_allenamento', true);
-   //request.setRequestHeader('Access-Control-Allow-Origin', '/api/riepilogo_alimentazione');
    request.send();
 
    request.onload = function () {
       let data = JSON.parse(this.response);
-      console.log(data);
 
       const tmplt = document.getElementById('row_attivita');
       const tabella = document.getElementById('tabella_attivita');
