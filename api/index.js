@@ -535,7 +535,7 @@ app.post('/api/cronologia_allenamento', (request, response) => {
         var yyyy = today.getFullYear();
         var time = today.getHours() + "." + today.getMinutes();
         today = dd + '_' + mm + '_' + yyyy + ':' + time;
-        
+
         // creazione nuovo elemento da inserire da Request Parameter
         if (request.body['nome'] == null || isNaN(parseInt(request.body['tempo']))
             || parseInt(request.body['tempo']) <= 0
@@ -950,6 +950,94 @@ app.get('/api/calorie_bruciate', (request, response) => {
     response.json(totale);
 })
 
+
+/**
+ * @swagger
+ * /api/assunzione_giornaliera/{valore_nutrizionale}:
+ *   get:
+ *     summary: Recupera il totale assunto nella giornata corrente del valore nutrizionale inserito.
+ *     description: Recupera il totale assunto nella giornata corrente del valore nutrizionale inserito. Il valore è espresso in grammi nel caso di macronutrienti e di milligrammi in caso di micronutrienti.
+ *     tags:
+ *       - Utility APIs
+ *     parameters:
+ *       - in: path
+ *         name: valore_nutrizionale
+ *         schema:
+ *             type: string
+ *             example: grassi
+ *         required: true
+ *         description: Il nome del valore nutrizionale.
+ *     responses:
+ *       200:
+ *         description: Viene restituita la quantità assunta.
+ *         content:
+ *           schema:
+ *             type: number
+ *             format: float
+ *             description: Quantità [g]/[mg].
+ *             example: 34.65
+ *       404:
+ *         description: Il valore nutrizionale richiesto non è presente.
+ */
+app.get('/api/assunzione_giornaliera/:valore_nutrizionale', (request, response) => {
+    var data = fs.readFileSync('../cronologie/cronologia_alimentazione.json');
+
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    var time = today.getHours() + "." + today.getMinutes();
+    today = dd + '_' + mm + '_' + yyyy + ':' + time;
+
+    var myObject = JSON.parse(data);
+
+
+    var valore = request.params.valore_nutrizionale;
+    var send = true;
+    var totale = 0;
+    for (let [i] of myObject.entries()) {
+        var equal = true;
+
+        for (var j = 0; j < 10 && equal; j++) {
+            equal = (myObject[i].data).toString().charAt(j) == today.charAt(j);
+        }
+
+        if (equal) {
+            switch (valore) {
+                case "grassi":
+                    totale += parseFloat(myObject[i].grassi);
+                    break;
+                case "carboidrati":
+                    totale += parseFloat(myObject[i].carboidrati);
+                    break;
+                case "proteine":
+                    totale += parseFloat(myObject[i].proteine);
+                    break;
+                case "fibre":
+                    totale += parseFloat(myObject[i].fibre);
+                    break;
+                case "ferro":
+                    totale += parseFloat(myObject[i].ferro);
+                    break;
+                case "idio":
+                    totale += parseFloat(myObject[i].iodio);
+                    break;
+                case "magnesio":
+                    totale += parseFloat(myObject[i].magnesio);
+                    break;
+                default:
+                    send = false;
+                    response.status(404);
+                    response.send();
+            }
+
+        }
+    }
+    if (send) {
+        response.status(200);
+        response.json(totale);
+    }
+})
 
 
 
