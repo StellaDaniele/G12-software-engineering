@@ -49,6 +49,8 @@ All the APIs developed are fully documented (in Italian) using JSDoc and Swagger
 
 <img src="./images/documentation.png" alt="Documentation">
 
+The documentation can be found on *localhost:5000/api-docs* once started the server.
+
 ### How to start the server
 
 ##### MongoDB connection string
@@ -59,7 +61,10 @@ To start the server you just need to execute the command *npm start* in the *api
 
 <img src="./images/start_server.png" alt="Start server">
 
+The server runs on *localhost:5000/* as stated above.
+
 ### API Testing
-All the APIs control the input data to meet the requirements and some of them were tested using Supertest and Tape. To run the tests, execute the command *npm test* in the *api* directory. Note that the server starts to listen also when running the testing (the listening function is in the index.js, with the local APIs), so it won't end but you can see the results nonetheless.
+All the APIs control the input data to meet the requirements and some of them were tested using Supertest and Tape. To run the tests, execute the command *npm test* in the *api* directory. The script that performs the scripts can be found in <a href="./api/test/index.js">api/test/index.js</a>.
+Note that the server starts to listen also when running the testing (the listening function is in <a href="./api/index.js">api/index.js</a>, with the local APIs), so it won't end but you can see the results nonetheless.
 
 <img src="./images/API_testing.png" alt="API Testing">
