@@ -57,3 +57,23 @@ function loadAlenamento() {
       }
    }
 }
+
+function deleteMeal(){
+   const request = new XMLHttpRequest();
+
+   const nome=document.getElementById('alimento').innerText;
+   const data=document.getElementById('data').innerText;
+
+   request.open('DELETE', '/api/cronologia_alimentazione/'+nome+'/'+data, true);
+   request.send();
+}
+
+function deleteActivity(){
+   const request = new XMLHttpRequest();
+
+   const nome=document.getElementById('attivita').innerText;
+   const data=document.getElementById('data2').innerText;
+
+   request.open('DELETE', '/api/cronologia_allenamento/'+nome+'/'+data, true);
+   request.send();
+}

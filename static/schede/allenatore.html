@@ -10,20 +10,7 @@
   <link rel="stylesheet" href="/sidenav.css" />
 
   <script src="/navbar.js"></script>
-  <script>
-    fetch("/datiAllenatore")
-    .then(res =>res.json())
-    .then(data=>{
-      let nome = document.getElementById("anome");
-      let cognome=document.getElementById("acognome");
-      let eta=document.getElementById("aetà");
-      let certificazione=document.getElementById("acertificazione");
-      nome.innerText = data.nome;
-      cognome.innerText=data.cognome;
-      eta.innerText=data.eta;
-      certificazione.innerText=data.certificazione;
-    })
-  </script>
+  <script src="display_trainer.js"></script>
 
   <title>Allenatore</title>
 </head>
@@ -45,6 +32,7 @@
 
   <div id="main">
     <form>
+      <script>displayTrainer()</script>
       <h1>Dettagli allenatore</h1>
       <hr />
       <label for="anome">Nome:</label>

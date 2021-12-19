@@ -6,6 +6,8 @@ function addMeal() {
    const field2 = document.getElementById('quantità-alimento');
    var quantità = field2.value;
 
+   console.log(quantità);
+
    request.open('POST', "/api/cronologia_alimentazione/" + nome + "/" + quantità, true);
    request.send();
 }
