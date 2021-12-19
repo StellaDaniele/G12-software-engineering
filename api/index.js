@@ -1032,7 +1032,7 @@ app.get('/api/assunzione_giornaliera/:valore_nutrizionale', (request, response) 
     }
     if (send) {
         response.status(200);
-        response.json(totale);
+        response.json(Math.round(totale * 1000) / 1000);
     }
 })
 

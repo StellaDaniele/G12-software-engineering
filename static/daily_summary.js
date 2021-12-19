@@ -14,15 +14,15 @@ function loadEnergy() {
     request_energia.onload = function () {
         let data = JSON.parse(this.response);
         energia_assunta = parseFloat(data);
-        let request_energia_bruciata=new XMLHttpRequest();
+        let request_energia_bruciata = new XMLHttpRequest();
         request_energia_bruciata.open('GET', '/api/calorie_bruciate', true);
         request_energia_bruciata.send();
         request_energia_bruciata.onload = function () {
-        let data = JSON.parse(this.response);
-        energia_bruciata = parseFloat(data);
-        let bilancio = energia_assunta - energia_bruciata;
-        document.getElementById("bilancio-energetico").textContent = bilancio;
-    }
+            let data = JSON.parse(this.response);
+            energia_bruciata = parseFloat(data);
+            let bilancio = energia_assunta - energia_bruciata;
+            document.getElementById("bilancio-energetico").textContent = Math.round(bilancio * 10) / 10;
+        }
     }
 }
 
