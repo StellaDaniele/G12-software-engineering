@@ -15,6 +15,7 @@
   <script src="navbar.js"></script>
   <script src="populate_table.js"></script>
   <script src="add_food_or_activity.js"></script>
+  <script src="daily_summary.js"></script>
   <title>SmartFit</title>
 </head>
 
@@ -36,59 +37,48 @@
   <!--<div id="main">-->
   <div class="split left">
     <div class="centered">
+      <script>loadIntake()</script>
       <h1>Riepilogo giornaliero</h1>
       <hr />
       <label for="kcal">Bilancio energetico:</label>
       <span type="text" id="bilancio-energetico" name="bilancio-energetico" readonly></span>kcal<br><br>
+      <h4> Macronutrienti assunti a confronto:</h4><br>
       <span class="span" style="background-color: green"></span>Carbs
       <span class="span" style="background-color: red"></span>Proteins
       <span class="span" style="background-color: blue"></span>Fats
       <br />
-      <!--
-    <progress id="carb" value="32" max="100"></progress>
-    <br />
-    <progress id="prote" value="32" max="100"></progress>
-    <br />
-    <progress id="fat" value="32" max="100"></progress>
-    <button class="plus-button"><i class="fa fa-plus"></i></button>
-    <br>
-
-    -->
-
       <div class="progress progress-color" id="carb">
-        <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="33"
+        <div class="progress-bar bg-success" id="carb_value" role="progressbar" style="width: 25%" aria-valuenow="33"
           aria-valuemax="100" aria-valuemin="0"></div>
       </div>
 
       <div class="progress progress-color" id="prote">
-        <div class="progress-bar bg-danger" role="progressbar" style="width: 25%" aria-valuenow="33" aria-valuemax="100"
+        <div class="progress-bar bg-danger" id="prote_value" role="progressbar" style="width: 25%" aria-valuenow="33" aria-valuemax="100"
           aria-valuemin="0"></div>
       </div>
 
       <div class="progress progress-color" id="fat">
-        <div class="progress-bar bg-primary" role="progressbar" style="width: 25%" aria-valuenow="33"
+        <div class="progress-bar bg-primary" id="fat_value" role="progressbar" style="width: 25%" aria-valuenow="33"
           aria-valuemax="100" aria-valuemin="0"></div>
       </div>
-      <label for="micronutrienti">micronutrienti assunti:</label>
+      <br><br><h4> Micronutrienti assunti:</h4>
       <br>
-      <label for="fibre">Fibre:</label>
-      <span type="text" id="fibre" name="fibre" aria-readonly></span> mg<br>
       <label for="ferro">Ferro:</label>
       <span type="text" id="ferro" name="ferro" aria-readonly></span> mg<br>
       <label for="iodio">Iodio:</label>
       <span type="text" id="iodio" name="iodio" aria-readonly></span> mg<br>
       <label for="magnesio">Magnesio:</label>
-      <span type="text" id="magnesio" name="magnesio" aria-readonly></span> mg<br>
-
+      <span type="text" id="magnesio" name="magnesio" aria-readonly></span> mg<br><br>
+      <h4> Inserisci nuove consumazioni e allenamenti:</h4><br>
       <input type="text" id="nome-alimento" name="nome-alimento" placeholder="Nome"><br>
       <input type="text" id="quantità-alimento" name="quantità-alimento" placeholder="Quantità"><br>
-      <input type="button" id="aggiunta-alimento" value="Aggiungi alimento" onclick="addMeal()"><br>
+      <input type="button" id="aggiunta-alimento" onclick="addMeal()" value="Aggiungi alimento"><br>
       <br>
 
       <input type="text" id="nome-allenamento" name="nome-allenameto" placeholder="Nome"><br>
       <input type="text" id="tempo-allenamento" name="tempo-allenameto" placeholder="Tempo"><br>
       <input type="text" id="energia-allenamento" name="energia-allenameto" placeholder="Energia Bruciata"><br>
-      <input type="button" id="aggiunta-allenamento" value="Aggiungi allenamento">
+      <input type="button" id="aggiunta-allenamento" onclick="addActivity()" value="Aggiungi allenamento">
     </div>
   </div>
 
@@ -102,6 +92,7 @@
           <th>Data</th>
         </tr>
       </thead>
+      <h4> Riepilogo alimentazione:</h4>
       <tbody id="tabella_alimentazione">
         <template id="row_alimentazione">
           <tr>
@@ -111,7 +102,7 @@
           </tr>
         </template>
       </tbody>
-    </table>
+    </table><br><br>
     <table border="1">
       <script>loadAlenamento()</script>
       <thead>
@@ -121,6 +112,7 @@
           <th>Data</th>
         </tr>
       </thead>
+      <br><h4> Riepilogo allenamento:</h4>
       <tbody id="tabella_attivita">
         <template id="row_attivita">
           <tr>

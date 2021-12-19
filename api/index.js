@@ -1016,7 +1016,7 @@ app.get('/api/assunzione_giornaliera/:valore_nutrizionale', (request, response) 
                 case "ferro":
                     totale += parseFloat(myObject[i].ferro);
                     break;
-                case "idio":
+                case "iodio":
                     totale += parseFloat(myObject[i].iodio);
                     break;
                 case "magnesio":
