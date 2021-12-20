@@ -24,7 +24,7 @@ The course consisted of one big group project, divided into six deliverables in 
 
 ### Goal
 Develop the APIs to implement all the features identified in the D5, based on the other parts of the project.
-The minimum requirements for this part of the project were:
+The requirements for this part of the project were:
 
 * Connect to at least one (external) API or DB
 * Realize at least three different pages
