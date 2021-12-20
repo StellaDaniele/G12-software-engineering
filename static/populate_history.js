@@ -1,3 +1,4 @@
+// [DONE] Funzione per creare dinamicamente la tabella di cronologia alimentazione in base alla risposta della API GET
 function loadMealHistory(){
 
    const request = new XMLHttpRequest();
@@ -46,6 +47,7 @@ function loadMealHistory(){
    }
 }
 
+// [DONE] Funzione per creare dinamicamente la tabella di cronologia allenamento in base alla risposta della API GET
 function loadActivityHistory(){
    const request = new XMLHttpRequest();
 

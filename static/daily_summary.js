@@ -1,9 +1,13 @@
+// [DONE] Funzione per inserire tutti i vari valori (micronutrienti, macronutrienti ed energia) nella scheda di riepilogo giornaliero
+// Sono consapevole che avrei dovuto utilizzare le promises al posto di fare una "concatenazione" nelle onload, anche se così funziona.
+// Purtroppo non sono riuscito a capire come funzionano nel tempo che avevo a disposizione, imparerò il prima possibile come si fa. 
 function loadIntake() {
     loadEnergy();
     loadMicro();
     loadMacro();
 }
 
+// [DONE] Funzione che usa le due API di utilità dell'energia per calcolare il bilancio e inserirlo nella schermata di riepilogo
 function loadEnergy() {
     let energia_bruciata = 0;
     let energia_assunta = 0;
@@ -26,6 +30,7 @@ function loadEnergy() {
     }
 }
 
+// [DONE] Funzione che usa la API GET di utilità per inserire negli span le varie quantità di nutrienti assunti durante la giornata corrente
 function loadMicro() {
     let ferro = 0;
     let iodio = 0;
@@ -59,6 +64,7 @@ function loadMicro() {
 
 }
 
+// [DONE] Funzione che utilizza la API GET di utilità per calcolare le quantità di macronutrienti assunti nella giornata corrente e modificare le progress bar
 function loadMacro() {
     let carbs = 0;
     let proteins = 0;

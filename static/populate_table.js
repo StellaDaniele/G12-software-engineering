@@ -1,3 +1,4 @@
+// [DONE] Funzione per creare dinamicamente la tabella di riepilogo alimentazione in base alla risposta della API GET
 function loadAlimentazione() {
    const request = new XMLHttpRequest();
 
@@ -28,6 +29,7 @@ function loadAlimentazione() {
    }
 }
 
+// [DONE] Funzione per creare dinamicamente la tabella di riepilogo allenamento in base alla risposta della API GET
 function loadAlenamento() {
    const request = new XMLHttpRequest();
 

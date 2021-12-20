@@ -1,3 +1,4 @@
+// [DONE] Funzione che inserisce le informazioni dell'utente ritornate dalla API nei vari text field
 function displayTrainer() {
    const request_trainer = new XMLHttpRequest();
    request_trainer.open('GET', '/api/datiAllenatore', true);

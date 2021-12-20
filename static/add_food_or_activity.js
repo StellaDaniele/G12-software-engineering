@@ -1,5 +1,6 @@
 let request = new XMLHttpRequest();
 
+// [DONE] Funzione che chiama la API di inserimento nuova consumazione quando il pulsante nella pagina di riepilogo viene cliccato
 function addMeal() {
    const field1 = document.getElementById('nome-alimento');
    var nome = field1.value;
@@ -12,6 +13,7 @@ function addMeal() {
    request.send();
 }
 
+// [DONE] Funzione che chiama la API di inserimento nuova attività quando il pulsante nella pagina di riepilogo viene cliccato
 function addActivity() {
    var attività = {
       "nome": document.getElementById('nome-allenamento').value,

@@ -11,7 +11,7 @@ const DATABASE = "Food";
 let database;
 
 ///////// The CONNECTION_STIRNG is given in the document, the password will be changed as soon as the results will be published.
-const CONNECTION_STRING = "mongodb+srv://G12:1aRI17qvJk67R@g12-nutritionfacts.sxr24.mongodb.net/test";
+const CONNECTION_STRING = "";
 
 // XML
 var XMLHttpRequest = require('xhr2');
@@ -415,7 +415,7 @@ app.get('/api/riepilogo_alimentazione', (request, response) => {
 
 //////////////// POST APIs
 
-// Api per inserimento nel JSON cronologia_alimentazione
+// [DONE] Api per inserimento nel JSON cronologia_alimentazione
 /**
  * @swagger
  * /api/cronologia_alimentazione/{nome}/{quantità}:
@@ -484,7 +484,7 @@ app.post('/api/cronologia_alimentazione/:nome/:quantita', (request, response) =>
 })
 
 
-// Api per inserimento nel JSON cronologia_allenamento
+// [DONE] Api per inserimento nel JSON cronologia_allenamento
 /**
  * @swagger
  * /api/cronologia_allenamento:
@@ -566,8 +566,8 @@ app.post('/api/cronologia_allenamento', (request, response) => {
 
 
 
-
 //////////////// DELETE APIs
+
 // [DONE] Api per eliminazione da cronologia_alimentazione
 /**
  * @swagger
@@ -850,7 +850,8 @@ app.get('/api/valori_nutrizionali/:nome/:quantita', (request, response) => {
 
 })
 
-// Api per calorie assunte
+
+// [DONE] Api per calorie assunte
 /**
  * @swagger
  * /api/calorie_assunte:
@@ -899,8 +900,7 @@ app.get('/api/calorie_assunte', (request, response) => {
 
 
 
-
-// Api per calorie bruciate
+// [DONE] Api per calorie bruciate
 /**
  * @swagger
  * /api/calorie_bruciate:
@@ -948,6 +948,7 @@ app.get('/api/calorie_bruciate', (request, response) => {
 })
 
 
+// [DONE] API per assunzione giornaliera valore nutrizionale
 /**
  * @swagger
  * /api/assunzione_giornaliera/{valore_nutrizionale}:
