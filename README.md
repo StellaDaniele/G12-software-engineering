@@ -8,10 +8,10 @@
 
 ### Table of contents
 
-- [What is this?](#what-is-this?)
+- [What is this?](#what-is-this)
 - [Goal](#goal)
-- [What did we do?](#what-did-we-do?)
-- [Who did what?](#who-did-what?)
+- [What did we do?](#what-did-we-do)
+- [Who did what?](#who-did-what)
 - [Dependences](#dependences)
 - [Documentation](#documentation)
 - [How to start the server](#how-to-start-the-server)
