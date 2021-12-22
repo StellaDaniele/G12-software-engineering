@@ -11,6 +11,7 @@
 - [What is this?](#what-is-this?)
 - [Goal](#goal)
 - [What did we do?](#what-did-we-do?)
+- [Who did what?](#who-did-what?)
 - [Dependences](#dependences)
 - [Documentation](#documentation)
 - [How to start the server](#how-to-start-the-server)
@@ -32,13 +33,19 @@ The requirements for this part of the project were:
 * Document and test some of the APIs developed
 
 ### What did we do?
-We developed 14 APIs, fully documented. We tested all of them and wrote the automatic testing script (supertest + tape) for 3 of them, one of them with all kinds of inputs that can be sent to it.<br>
+We developed 13 APIs, fully documented. We tested them all and wrote four automatic testing scripts (supertest + tape). One of the scripts tests an API with all kinds of inputs.<br>
 We realized a database with MongoDB and four different pages in total:
 * Home - Daily summary
 * Histories
 * Trainer
 * My diet and training schedules 
-Since the focus was just on the APIs, and we had not studied web design (nor web development) formerly, we designed a really basic and rough front end, but it is enough to test the APIs developed.
+
+Since the focus was just on the APIs, and we had not studied web design (nor web development) formerly, we designed a really basic and rough UI, but it is enough to test the APIs developed.
+
+### Who did what?
+Daniele developed most of the scripts: all the APIs, the tests, and some for the front end. He also wrote the documentation for the APIs.
+Alessio developed some scripts for the front end, part of the UI and created the database with MongoDB. 
+David created almost all the UI.
 
 ### Dependences
 The dependences of the local APIs can be found in the <a href="./api/package.json">package.json</a>, located in the *api* directory.
