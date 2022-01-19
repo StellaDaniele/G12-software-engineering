@@ -61,7 +61,23 @@ The documentation can be found on *localhost:5000/api-docs* once started the ser
 ### How to start the server
 
 ##### MongoDB connection string
-We created a small database with MongoDB just to test our APIs. The connection string can be found in the document delivered. It will be changed or probably deleted as soon as the results will be published, for obvious reasons.
+We created a small database with MongoDB just to test our APIs. The connection string can be found in the document delivered. It will be changed or probably deleted as soon as the results will be published, for obvious reasons. <br>
+
+**UPDATE:** 
+The DB is no longer available. If you want to try the APIs that use the DB you must create a new DB (or simply link a JSON) with the following structure:
+```json
+[{
+  "nome": Name of the food (string),
+  "energia": kcal (int),
+  "grassi": fats (double),
+  "carboidrati": carbohydrates (double),
+  "proteine": proteins (double),
+  "fibre": fibers (double),
+  "ferro": iron (double),
+  "iodio": iodine (double),
+  "magnesio": magnesium (double)
+}]
+```
 
 ##### Starting the server
 To start the server you just need to execute the command *npm start* in the *api* directory:
